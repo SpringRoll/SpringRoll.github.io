@@ -1,47 +1,59 @@
 <template>
-  <div class="nav">
-    <router-link class="nav__link" to="/"><img class="nav__logo" src="@/assets/logo.png" alt="SpringRoll Logo">
-      <span>Springroll.io</span>
-    </router-link>
-    |
-    <a class="nav__link" href="https://github.com/SpringRoll" target="_blank">Github</a>
-    |
-    <router-link class="nav__link" to="/examples">Examples</router-link>
-    |
-    <a class="nav__link" href="https://github.com/SpringRoll/SpringRoll/wiki" target="_blank">Wiki</a>
-  </div>
+  <v-list dense class="nav__list">
+    <v-list-tile v-for="route of routes" :key="route.path">
+      <v-list-tile-action>
+        <v-icon>{{ route.icon }}</v-icon>
+      </v-list-tile-action>
+      <v-list-tile-content>
+        <router-link class="title nav__link" v-bind:to="route.path">
+          {{ route.title }}
+        </router-link>
+      </v-list-tile-content>
+    </v-list-tile>
+    <v-list-tile>
+      <v-list-tile-action>
+        <v-icon>{{'code' }}</v-icon>
+      </v-list-tile-action>
+      <v-list-tile-content>
+        <a class="title nav__link" href="https://github.com/SpringRoll" target="_blank">Github</a>
+      </v-list-tile-content>
+    </v-list-tile>
+    <v-list-tile>
+      <v-list-tile-action>
+        <v-icon>{{'info' }}</v-icon>
+      </v-list-tile-action>
+      <v-list-tile-content>
+        <a class="title nav__link" href="https://github.com/SpringRoll/SpringRoll/wiki" target="_blank">Wiki</a>
+      </v-list-tile-content>
+    </v-list-tile>
+  </v-list>
 </template>
 
-<style lang="scss" scoped>
-.nav {
-  height: 3rem;
-  background-color: #393f4d;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  &__logo {
-    height: 2.25rem;
-    padding: 0 0.75rem 0 0.5rem;
-  }
-
-  &__link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 0.5rem;
-  }
-
-  a {
-    color: white;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
+<script>
+import { routes } from "@/router";
+export default {
+  data() {
+    return {
+      routes
     }
   }
 }
-</style>
+</script>
 
+
+<style lang="scss" scoped>
+.nav {
+  &__link {
+    text-decoration: none;
+    font-family: inherit;
+    color: rgba(0, 0, 0, 0.54);
+    font-weight: bold;
+  }
+
+  &__list {
+    margin-top: 4rem;
+  }
+}
+</style>
 
 

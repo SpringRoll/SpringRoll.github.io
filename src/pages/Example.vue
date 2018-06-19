@@ -1,3 +1,54 @@
 <template>
-  <h1>Example Page</h1>
+  <div>
+    <h1>Examples</h1>
+    <div>
+      <router-link class="example__link" v-for="route of routes" :key="route.name" :to="route">
+        {{ route.name }}
+      </router-link>
+    </div>
+    <router-view class="example__content" />
+  </div>
+
 </template>
+
+<script>
+
+
+export default {
+  data() {
+    return {
+      routes: [
+        {
+          name: 'SpeechSynth'
+        },
+        {
+          name: 'ColorFilter'
+        },
+        {
+          name: 'Resize'
+        }
+
+      ]
+    }
+  }
+}
+</script>
+
+
+<style lang="scss" scoped>
+.example {
+  &__nav {
+    display: flex;
+  }
+  &__content {
+    margin-top: 1.5rem;
+  }
+
+  &__link {
+    color: black;
+    font-weight: bold;
+    margin-right: 0.75rem;
+  }
+}
+</style>
+
