@@ -1,12 +1,13 @@
-import Example from '@/pages/Example.vue';
-import Main from '@/pages/Main.vue';
-import Docs from '@/pages/Docs.vue';
+import Example from '@/pages/Example';
+import Main from '@/pages/Main';
+import Docs from '@/pages/Docs';
 
 // Example Pages
 import ExampleMain from '@/pages/examples/main.vue';
-import SpeechSynth from '@/pages/examples/SpeechSynth.vue';
-import ColorFilter from '@/pages/examples/ColorFilter.vue';
-import ScaleManager from '@/pages/examples/ScaleManager.vue';
+import SpeechSynth from '@/pages/examples/SpeechSynth';
+import ColorFilter from '@/pages/examples/ColorFilter';
+import ScaleManager from '@/pages/examples/ScaleManager';
+import Controls from '@/pages/examples/Controls';
 
 export const routes = [
   { path: '/', name: 'home', component: Main, title: 'Main', icon: 'home' },
@@ -37,6 +38,11 @@ export const routes = [
         path: 'resize',
         name: 'Resize',
         component: ScaleManager
+      },
+      {
+        path: 'controls',
+        name: 'Controls',
+        component: Controls
       }
     ]
   }

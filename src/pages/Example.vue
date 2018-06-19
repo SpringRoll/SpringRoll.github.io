@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="example">
     <h1>Examples</h1>
     <div>
       <router-link class="example__link" v-for="route of routes" :key="route.name" :to="route">
@@ -26,6 +26,9 @@ export default {
         },
         {
           name: 'Resize'
+        },
+        {
+          name: 'Controls'
         }
 
       ]
@@ -37,6 +40,7 @@ export default {
 
 <style lang="scss" scoped>
 .example {
+  padding: 1rem;
   &__nav {
     display: flex;
   }
