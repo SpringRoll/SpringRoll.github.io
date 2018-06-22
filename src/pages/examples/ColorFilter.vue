@@ -14,7 +14,6 @@ export default {
     const types = [{name: 'None', value: null}];
     types.push(...filter.types);
 
-    console.log(types);
     return {
       selected: null,
       filter,
