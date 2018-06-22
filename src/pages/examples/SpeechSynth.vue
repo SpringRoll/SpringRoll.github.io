@@ -2,10 +2,16 @@
   <div>
 
     <div class="synth">
-      <div class="column short">
+      <div class="column">
         <h2>Speech Synth</h2>
-        <v-text-field v-model="message" label="What to Say" />
-        <v-btn @click="say()" color="success" :disabled="1 > message.length">Speak</v-btn>
+        <div class="column">
+          <v-text-field @input="updateCurrentExample()" v-model="message" label="What to Say" />
+          <v-btn @click="say()" color="success" :disabled="1 > message.length">Speak</v-btn>
+        </div>
+
+        <div class="example">
+          <pre v-highlightjs="currentExample"><code class="javascript"></code></pre>
+        </div>
       </div>
 
       <div class="column">
@@ -43,6 +49,7 @@ export default {
       speakerLang: "",
       message: "",
       totalVoices: speaker.voiceOptions.length || 0,
+      currentExample: "console.log('foo bar')"
     }
   },
 
@@ -61,18 +68,31 @@ export default {
     },
     onVolume(){
       this.speaker.volume = this.volume;
+      this.updateCurrentExample()
     },
     onRate() {
       this.speaker.rate = this.rate;
+      this.updateCurrentExample()
     },
     onPitch() {
       this.speaker.pitch = this.pitch;
+      this.updateCurrentExample()
     },
     onVoice() {
       this.speaker.voice = this.voice;
+      if (!this.speaker.voice) {
+        this.speaker.voice = this.voice - 1;
+      }
       this.speakerName = this.speaker.voice.name;
       this.speakerLang = this.speaker.voice.lang;
+      this.updateCurrentExample()
+    },
+    updateCurrentExample() {
+      this.currentExample = `import { SpeechSynth } from '...'; \n const speaker = new SpeechSynth({ \n  volume: ${this.volume}, \n  rate ${this.rate}, \n  pitch: ${this.pitch}, \n  voice: ${this.voice} \n}); \n speaker.say('${this.message}');`
     }
+  },
+  mounted() {
+    this.updateCurrentExample();
   }
 }
 </script>
@@ -91,9 +111,11 @@ export default {
   max-width: 30rem;
 }
 
+.example {
+  padding-top: 1.5rem;
+}
+
 .column {
-  display: flex;
-  flex-direction: column;
   min-width: 30rem;
 }
 

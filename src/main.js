@@ -2,10 +2,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Vuetify from 'vuetify';
+import VueHighlightJS from 'vue-highlightjs';
 
 // Library css
 import 'vuetify/dist/vuetify.min.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
+import './css/highlight.min.css';
 
 import App from './App.vue';
 import { routes } from './router';
@@ -24,6 +26,7 @@ Vue.use(Vuetify, {
     success: '#304FFE'
   }
 });
+Vue.use(VueHighlightJS);
 
 const router = new Router({
   routes

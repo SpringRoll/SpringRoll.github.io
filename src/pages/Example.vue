@@ -45,7 +45,7 @@ export default {
     display: flex;
   }
   &__content {
-    margin-top: 1.5rem;
+    margin: 1.5rem;
   }
 
   &__link {
