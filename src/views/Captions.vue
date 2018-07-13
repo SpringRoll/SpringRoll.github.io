@@ -47,7 +47,7 @@ export default {
           return files;
         })
         .filter(
-          file =>
+          (file) =>
             'audio/mp3' === file.type ||
             'audio/ogg' === file.type ||
             'audio/wav' === file.type

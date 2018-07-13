@@ -46,11 +46,8 @@ export default {
       return this.selected instanceof File;
     }
   },
-  methods: {
-
-  }
+  methods: {}
 };
-
 </script>
 
 <style lang="scss" scoped>
@@ -69,6 +66,3 @@ export default {
   </div>
 
 </template>
-
-
-

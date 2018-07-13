@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import { ColorFilter } from '../../Springroll/Springroll';
+import { ColorFilter } from 'springroll-2';
 export default {
   data() {
     const filter = new ColorFilter();
-    const types = [{name: 'None', value: null}];
+    const types = [{ name: 'None', value: null }];
     types.push(...filter.types);
 
     return {
@@ -23,26 +23,30 @@ export default {
       filter,
       types,
       currentExample: ''
-    }
+    };
   },
   methods: {
     changeFilter(e) {
       this.updateCodeExample(e);
       if (null === e) {
-       this.filter.removeFilter();
-       return;
+        this.filter.removeFilter();
+        return;
       }
       this.filter.changeFilter(e);
     },
     updateCodeExample(value) {
-      this.currentExample = `import { ColorFilter } from '...';\n` + (null === value ? ' filter.removeFilter()' : ` const filter = new ColorFilter(); \n filter.changeFilter('${value}')`);
+      this.currentExample =
+        'import { ColorFilter } from "...";\n' +
+        (null === value
+          ? ' filter.removeFilter()'
+          : ` const filter = new ColorFilter(); \n filter.changeFilter('${value}')`);
     }
   },
   mounted() {
     this.filter.element = this.$refs.image;
     this.updateCodeExample(null);
-  },
-}
+  }
+};
 </script>
 
 
@@ -61,4 +65,3 @@ export default {
   width: 50%;
 }
 </style>
-

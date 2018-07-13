@@ -59,4 +59,3 @@ $background: #eee;
     </v-btn>
   </div>
 </template>
-

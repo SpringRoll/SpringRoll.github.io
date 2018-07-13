@@ -12,8 +12,6 @@
 </template>
 
 <script>
-
-
 export default {
   data() {
     return {
@@ -30,11 +28,10 @@ export default {
         {
           name: 'Controls'
         }
-
       ]
-    }
+    };
   }
-}
+};
 </script>
 
 
@@ -55,4 +52,3 @@ export default {
   }
 }
 </style>
-

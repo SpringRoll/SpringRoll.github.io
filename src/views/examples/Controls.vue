@@ -20,21 +20,35 @@
 </template>
 
 <script>
-import { Controller } from '../../Springroll/Springroll';
+import { Controller } from 'springroll-2';
 export default {
   data() {
-    const listeners = ['w','a','s','d', 'enter', 'arrowleft', 'arrowright', 'arrowup', 'arrowdown', ' '];
+    const listeners = [
+      'w',
+      'a',
+      's',
+      'd',
+      'enter',
+      'arrowleft',
+      'arrowright',
+      'arrowup',
+      'arrowdown',
+      ' '
+    ];
 
     const enabled = {};
-    const keys = listeners.map(key => {
+    const keys = listeners.map((key) => {
       enabled[key] = false;
       return {
         key,
-        down: function() { this.enabled[key] = true }.bind(this),
-        up: function() { this.enabled[key] = false }.bind(this)
-      }
+        down: function() {
+          this.enabled[key] = true;
+        }.bind(this),
+        up: function() {
+          this.enabled[key] = false;
+        }.bind(this)
+      };
     });
-
 
     const controller = new Controller(keys);
     return {
@@ -42,7 +56,7 @@ export default {
       controller,
       enabled,
       currentExample: ''
-    }
+    };
   },
   methods: {
     updateCurrentExample() {
@@ -55,10 +69,12 @@ export default {
   },
   mounted() {
     this.updateCurrentExample();
-    setInterval(function() {
-      this.controller.update()
-    }.bind(this), 0);
+    setInterval(
+      function() {
+        this.controller.update();
+      }.bind(this),
+      0
+    );
   }
-}
+};
 </script>
-

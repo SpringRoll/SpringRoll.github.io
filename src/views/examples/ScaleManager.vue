@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ScaleManager } from '../../Springroll/Springroll';
+import { ScaleManager } from 'springroll-2';
 export default {
   data() {
     return {
@@ -23,22 +23,32 @@ export default {
         height: window.innerHeight,
         ratio: window.innerWidth / window.innerHeight
       },
-      currentExample: '',
-    }
+      currentExample: ''
+    };
   },
   methods: {
     updateCurrentExample(e) {
-      this.currentExample = `import { ScaleManager } from '...';\n const manager = new ScaleManager(); \n manager.enable(e => {\n  console.log(e.width); //${e.width} \n  console.log(e.height}); //${e.height} \n  console.log(e.ratio) //${e.ratio} \n });`
+      this.currentExample = `import { ScaleManager } from '...';\n const manager = new ScaleManager(); \n manager.enable(e => {\n  console.log(e.width); //${
+        e.width
+      } \n  console.log(e.height}); //${e.height} \n  console.log(e.ratio) //${
+        e.ratio
+      } \n });`;
     }
   },
   mounted() {
-    this.updateCurrentExample({width: window.innerWidth, height: window.innerHeight,  ratio: window.innerWidth / window.innerHeight })
-    this.manager.enable(function(e) {
-      this.size = e;
-      this.updateCurrentExample(e);
-    }.bind(this));
+    this.updateCurrentExample({
+      width: window.innerWidth,
+      height: window.innerHeight,
+      ratio: window.innerWidth / window.innerHeight
+    });
+    this.manager.enable(
+      function(e) {
+        this.size = e;
+        this.updateCurrentExample(e);
+      }.bind(this)
+    );
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -50,5 +60,3 @@ export default {
   resize: both;
 }
 </style>
-
-

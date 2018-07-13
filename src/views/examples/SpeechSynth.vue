@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="synth">
       <div class="column">
         <h2>Speech Synth</h2>
@@ -34,59 +33,63 @@
 </template>
 
 <script>
-import { SpeechSynth } from '../../Springroll/Springroll';
+import { SpeechSynth } from 'springroll-2';
 
 export default {
   data() {
-    const speaker = new SpeechSynth()
+    const speaker = new SpeechSynth();
     return {
       speaker,
       volume: speaker.volume,
       rate: speaker.rate,
       pitch: speaker.pitch,
       voice: 0,
-      speakerName: "",
-      speakerLang: "",
-      message: "",
+      speakerName: '',
+      speakerLang: '',
+      message: '',
       totalVoices: speaker.voiceOptions.length || 0,
-      currentExample: ""
-    }
+      currentExample: ''
+    };
   },
 
   watch: {
-    speaker:{
-      handler: function () {
+    speaker: {
+      handler: function() {
         this.totalVoices = this.speaker.voiceOptions.length;
         this.onVoice();
       },
       deep: true
-    },
+    }
   },
   methods: {
     say() {
       this.speaker.say(this.message);
     },
-    onVolume(){
+    onVolume() {
       this.speaker.volume = this.volume;
-      this.updateCurrentExample()
+      this.updateCurrentExample();
     },
     onRate() {
       this.speaker.rate = this.rate;
-      this.updateCurrentExample()
+      this.updateCurrentExample();
     },
     onPitch() {
       this.speaker.pitch = this.pitch;
-      this.updateCurrentExample()
+      this.updateCurrentExample();
     },
     onVoice() {
       this.speaker.setVoice(this.voice);
-      const {name, lang} = this.speaker.getVoice();
+      const { name, lang } = this.speaker.getVoice();
       this.speakerName = name;
       this.speakerLang = lang;
-      this.updateCurrentExample()
+      this.updateCurrentExample();
     },
     updateCurrentExample() {
-      this.currentExample = `import { SpeechSynth } from '...'; \n const speaker = new SpeechSynth({ \n  volume: ${this.volume}, \n  rate ${this.rate}, \n  pitch: ${this.pitch}, \n  voice: ${this.voice} \n}); \n speaker.say('${this.message}');`
+      this.currentExample = `import { SpeechSynth } from '...'; \n const speaker = new SpeechSynth({ \n  volume: ${
+        this.volume
+      }, \n  rate ${this.rate}, \n  pitch: ${this.pitch}, \n  voice: ${
+        this.voice
+      } \n}); \n speaker.say('${this.message}');`;
     }
   },
   mounted() {
@@ -122,4 +125,3 @@ export default {
   justify-content: space-between;
 }
 </style>
-
