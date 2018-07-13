@@ -27,13 +27,13 @@ export const routes = [
   },
   {
     path: '/examples',
+    name: 'examples',
     component: Example,
     title: 'Examples',
     icon: 'stars',
     children: [
       {
         path: '',
-        name: 'examples-home',
         component: ExampleMain
       },
       {
