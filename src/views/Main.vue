@@ -4,7 +4,7 @@
     <h1 class="logo">SpringRoll</h1>
 
     <div class="nav">
-      <router-link class="link" :to="{name: 'examples'}">Examples</router-link>
+      <router-link class="link" :to="{name: 'examples-home'}">Examples</router-link>
       <router-link class="link" :to="{name: 'docs'}">Docs</router-link>
       <a class="link" href="https://github.com/SpringRoll" target="_blank">Github</a>
 

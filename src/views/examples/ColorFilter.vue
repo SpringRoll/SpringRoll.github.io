@@ -35,7 +35,6 @@ export default {
       this.filter.changeFilter(e);
     },
     updateCodeExample(value) {
-      console.log(value);
       this.currentExample = `import { ColorFilter } from '...';\n` + (null === value ? ' filter.removeFilter()' : ` const filter = new ColorFilter(); \n filter.changeFilter('${value}')`);
     }
   },

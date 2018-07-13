@@ -49,7 +49,7 @@ export default {
       speakerLang: "",
       message: "",
       totalVoices: speaker.voiceOptions.length || 0,
-      currentExample: "console.log('foo bar')"
+      currentExample: ""
     }
   },
 
@@ -79,12 +79,10 @@ export default {
       this.updateCurrentExample()
     },
     onVoice() {
-      this.speaker.voice = this.voice;
-      if (!this.speaker.voice) {
-        this.speaker.voice = this.voice - 1;
-      }
-      this.speakerName = this.speaker.voice.name;
-      this.speakerLang = this.speaker.voice.lang;
+      this.speaker.setVoice(this.voice);
+      const {name, lang} = this.speaker.getVoice();
+      this.speakerName = name;
+      this.speakerLang = lang;
       this.updateCurrentExample()
     },
     updateCurrentExample() {
@@ -94,7 +92,7 @@ export default {
   mounted() {
     this.updateCurrentExample();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

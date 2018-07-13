@@ -1,42 +1,36 @@
 <template>
-  <v-app custome>
-    <v-navigation-drawer v-model="isOpen" app v-bind:temporary="true">
-      <Nav/>
-    </v-navigation-drawer>
-    <Toolbar @nav="isOpen = !isOpen" />
-    <Content/>
-    <Footer/>
+  <v-app>
+    <v-toolbar app :clipped-left="clipped">
+      <v-btn to="/" flat>LOGO</v-btn>
+      <v-btn to="examples-home" flat>Examples</v-btn>
+      <v-btn flat>Docs</v-btn>
+      <v-btn href="https://github.com/SpringRoll/SpringRoll" target="_blank" flat>Github</v-btn>
+      <v-btn flat>Wiki</v-btn>
+    </v-toolbar>
+    <v-content>
+      <router-view/>
+    </v-content>
   </v-app>
 </template>
 
 <script>
-import Nav from '@/components/Nav';
-import Toolbar from '@/components/Toolbar';
-import Footer from '@/components/Footer';
-import Content from '@/components/Content';
 
 export default {
-  name: 'app',
-  components: {
-    Nav,
-    Toolbar,
-    Footer,
-    Content
-  },
-
+  name: 'App',
   data() {
     return {
-      isOpen: false
+      clipped: false,
+      drawer: true,
+      fixed: false,
+      items: [{
+        icon: 'bubble_chart',
+        title: 'Inspire'
+      }],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: 'Vuetify.js'
     };
   }
-}
+};
 </script>
-
-<style lang="scss">
-@import '@/scss/_main.scss';
-
-.site-title {
-  margin-left: 1rem;
-}
-</style>
-
