@@ -52,9 +52,9 @@ export default {
 </script>
 
 <style lang="scss">
-.example {
-  max-width: 30rem;
-}
+// .example {
+//   max-width: 30rem;
+// }
 .target {
   background: lightgreen;
   resize: both;

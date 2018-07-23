@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <v-toolbar app :clipped-left="clipped">
-      <v-btn to="/"><img class="logo" src="@/assets/logo.png" alt="logo"></v-btn>
-      <v-btn to="/examples" flat>Examples</v-btn>
-      <v-btn flat to="/docs">Docs</v-btn>
-      <v-btn href="https://github.com/SpringRoll/SpringRoll" target="_blank" flat>Github</v-btn>
-      <v-btn href="https://github.com/SpringRoll/SpringRoll/wiki" target="_blank" flat>Wiki</v-btn>
+    <v-toolbar app class="nav__bar">
+      <v-btn flat active-class="nav__active" class="nav__button --logo" to="/"><img class=" nav__logo" src="@/assets/logo.png" alt="logo"></v-btn>
+      <v-btn flat active-class="nav__active" class="nav__button nav__text font-21" to="/examples">Examples</v-btn>
+      <v-btn flat active-class="nav__active" class="nav__button nav__text font-21" to="/docs">Docs</v-btn>
+      <v-btn flat active-class="nav__active" class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll" target="_blank">Github</v-btn>
+      <v-btn flat active-class="nav__active" class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll/wiki" target="_blank">Wiki</v-btn>
     </v-toolbar>
     <v-content>
       <router-view/>
@@ -37,10 +37,33 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
-.logo {
-  width: 2.25rem;
-  height: 2.25rem;
+<style lang="scss">
+@import "~@/scss/colors";
+.nav {
+  &__bar {
+    .v-toolbar__content {
+      padding-left: 0 !important;
+    }
+  }
+  &__text {
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  &__button {
+    height: 100%;
+    padding: 0 2.2rem;
+    margin: 0;
+  }
+
+  &__logo {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  &__active {
+    border-bottom: 0.2rem solid $accent;
+  }
 }
 </style>
 

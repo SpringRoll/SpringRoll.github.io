@@ -1,9 +1,11 @@
 <template>
   <div class="main">
-    <img src="@/assets/logo.png" alt="SpringRoll Logo">
-    <h1 class="logo">SpringRoll</h1>
-
-    <Game/>
+    <img class="main__logo" src="@/assets/logo.png" alt="SpringRoll Logo">
+    <h1 class="main__title">SpringRoll</h1>
+    <div class="main__about">
+      Keytar McSweeney's Williamsburg, readymade leggings try-hard 90's street art letterpress hoodie occupy Wes Anderson Banksy. Asymmetrical viral letterpress, McSweeney's seitan 3 wolf moon drinking vinegar sartorial pour-over messenger bag photo booth umami next level craft beer.
+    </div>
+    <!-- <Game/> -->
   </div>
 </template>
 
@@ -21,38 +23,51 @@ export default {
 <style lang="scss">
 @import "~@/scss/mixins";
 @import "~@/scss/fonts";
-.logo {
-  margin-top: 1.5rem;
-  border-bottom: 0.3rem solid #000;
-  width: 25rem;
-  text-align: center;
-  @extend .font-aleo;
-  @extend .font-66;
-}
-.link {
-  font-size: 1.5rem;
-  font-weight: 500;
-  text-decoration: none;
-  color: #000;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.nav {
-  margin-top: 1rem;
-  width: 20rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+@import "~@/scss/colors";
 
 .main {
+  margin-top: 11.5rem;
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
+
+  &::before,
+  &::after {
+    background-size: cover;
+    bottom: 0;
+    content: " ";
+    height: 35rem;
+    opacity: 0.4;
+    position: absolute;
+    width: 100%;
+  }
+
+  &::before {
+    background-image: url("~@/assets/svg/wave1.svg");
+  }
+
+  &::after {
+    background-image: url("~@/assets/svg/wave2.svg");
+  }
+
+  &__logo {
+    width: 11.8rem;
+    height: 11.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  &__title {
+    color: $primary;
+    @extend .font-aleo;
+    @extend .font-66;
+  }
+
+  &__about {
+    width: 66rem;
+    height: 15rem;
+    margin-top: 5.3rem;
+    @extend .font-21;
+    @extend .font-light;
+  }
 }
 </style>

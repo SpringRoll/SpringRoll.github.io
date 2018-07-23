@@ -36,12 +36,12 @@ $body-font-family: $assistant;
 }
 @font-face {
   font-family: $assistant;
-  font-weight: 400;
+  font-weight: 300;
   src: url($font-path-assistant + 'Light.ttf') format('truetype');
 }
 @font-face {
   font-family: $assistant;
-  font-weight: 300;
+  font-weight: 200;
   src: url($font-path-assistant + 'ExtraLight.ttf') format('truetype');
 }
 
@@ -71,12 +71,12 @@ $body-font-family: $assistant;
 
 .font-light {
   @extend .font;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .font-extra-light {
   @extend .font;
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .font-aleo {

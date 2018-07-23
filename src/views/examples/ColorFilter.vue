@@ -1,10 +1,10 @@
 <template>
   <div class="filter">
-    <div class="column">
+    <div class="filter__column">
       <v-select v-model="selected" item-text="name" :items="types" @input="changeFilter($event)" />
-      <img ref="image" class="example__image" src="@/assets/example.png" alt="Example Image">
+      <img ref="image" src="@/assets/example.png" alt="Example Image">
     </div>
-    <div class="column">
+    <div class="filter__column">
       <pre v-highlightjs="currentExample"><code class="javascript"></code></pre>
     </div>
   </div>
@@ -53,15 +53,16 @@ export default {
 <style lang="scss">
 .filter {
   display: flex;
-}
-.example {
-  &__image {
-    width: 100%;
-    max-width: 50rem;
-  }
-}
 
-.column {
-  width: 50%;
+  &__example {
+    &__image {
+      width: 100%;
+      max-width: 50rem;
+    }
+  }
+
+  &__column {
+    width: 50%;
+  }
 }
 </style>

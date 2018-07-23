@@ -109,12 +109,12 @@ export default {
   max-width: 65rem;
 }
 .controls {
-  max-width: 30rem;
+  // max-width: 30rem;
 }
 
-.example {
-  padding-top: 1.5rem;
-}
+// .example {
+//   padding-top: 1.5rem;
+// }
 
 .column {
   min-width: 30rem;

@@ -1,11 +1,8 @@
 <template>
   <div class="example">
-    <h1>Examples</h1>
-    <div>
-      <router-link class="example__link" v-for="route of routes" :key="route.name" :to="route">
-        {{ route.name }}
-      </router-link>
-    </div>
+    <router-link class="example__link" v-for="route of routes" :key="route.name" :to="route">
+      {{ route.name }}
+    </router-link>
     <router-view class="example__content" />
   </div>
 
@@ -37,7 +34,9 @@ export default {
 
 <style lang="scss">
 .example {
-  padding: 1rem;
+  width: 100%;
+  height: 100%;
+
   &__nav {
     display: flex;
   }
