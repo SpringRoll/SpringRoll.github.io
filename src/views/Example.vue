@@ -35,7 +35,7 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
 .example {
   padding: 1rem;
   &__nav {

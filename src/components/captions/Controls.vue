@@ -50,7 +50,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .controls {
   min-width: 20rem;
   width: 40rem;

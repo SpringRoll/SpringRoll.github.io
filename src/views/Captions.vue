@@ -56,7 +56,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 $headerHeight: 5rem;
 $headerFontColor: #000;
 

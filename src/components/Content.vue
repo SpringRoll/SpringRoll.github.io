@@ -8,7 +8,7 @@
   </v-content>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .container {
   position: relative;
   width: 100%;

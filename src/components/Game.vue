@@ -12,7 +12,7 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
 .game {
   width: 40rem;
   height: 30rem;

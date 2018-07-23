@@ -18,12 +18,16 @@ export default {
 
 
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import "~@/scss/mixins";
+@import "~@/scss/fonts";
 .logo {
   margin-top: 1.5rem;
   border-bottom: 0.3rem solid #000;
   width: 25rem;
   text-align: center;
+  @extend .font-aleo;
+  @extend .font-66;
 }
 .link {
   font-size: 1.5rem;
