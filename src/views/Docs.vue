@@ -1,5 +1,5 @@
 <template>
-  <iframe class="iframe" :src="base + 'docs'"></iframe>
+  <iframe class="iframe" :src="base + 'docs/index.html'"></iframe>
 </template>
 
 <script>

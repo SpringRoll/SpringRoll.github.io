@@ -1,5 +1,5 @@
 <template>
-  <iframe :src="base + 'game'" frameborder="0" />
+  <iframe class="game" :src="base + 'game/index.html'" frameborder="0" />
 </template>
 
 <script>
@@ -10,4 +10,12 @@ export default {
 };
 
 </script>
+
+
+<style lang="scss" scoped>
+.game {
+  width: 40rem;
+  height: 30rem;
+}
+</style>
 
