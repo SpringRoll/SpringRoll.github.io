@@ -1,9 +1,12 @@
 import '@babel/polyfill';
 import Vue from 'vue';
-import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
 import './scss/main.scss';
+
+// Plugins
+import './plugins/vuetify';
+import './plugins/highlight';
 
 Vue.config.productionTip = false;
 
