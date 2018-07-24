@@ -39,10 +39,6 @@ export default new Router({
       children: [
         {
           path: '',
-          component: SpeechSynth
-        },
-        {
-          path: 'speech-synth',
           name: 'SpeechSynth',
           component: SpeechSynth
         },

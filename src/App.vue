@@ -43,8 +43,7 @@ export default {
 .nav {
   &__bar {
     .v-toolbar__content {
-      padding-left: 0 !important;
-      height: 5.6rem !important;
+      padding-left: 0;
     }
   }
   &__text {
@@ -55,7 +54,6 @@ export default {
 
   &__button {
     height: 100% !important;
-    padding: 0 2.2rem !important;
     margin: 0 !important;
   }
 
@@ -64,8 +62,9 @@ export default {
     height: 2.8rem;
   }
 
-  &__active {
+  &__active.nav__text {
     border-bottom: 0.2rem solid $accent;
+    @extend .font-semi-bold;
   }
 }
 </style>

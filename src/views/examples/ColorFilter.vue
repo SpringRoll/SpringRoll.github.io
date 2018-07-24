@@ -1,18 +1,21 @@
 <template>
-  <div class="filter">
-    <div class="filter__column">
-      <v-select v-model="selected" item-text="name" :items="types" @input="changeFilter($event)" />
-      <img ref="image" src="@/assets/example.png" alt="Example Image">
+  <Example title="Filter Example">
+    <div slot="example">
+      <img class="filter__image" ref="image" src="@/assets/example.png" alt="Example Image">
+      <label class="filter__label">Color Filter</label>
+      <v-select class="filter__select" v-model="selected" item-text="name" :items="types" @input="changeFilter($event)" />
     </div>
-    <div class="filter__column">
-      <pre v-highlightjs="currentExample"><code class="javascript"></code></pre>
-    </div>
-  </div>
+    <pre slot="code" v-highlightjs="currentExample"><code class="javascript code-block"></code></pre>
+  </Example>
 </template>
 
 <script>
 import { ColorFilter } from 'springroll-2';
+import Example from '@/components/Example';
 export default {
+  components: {
+    Example
+  },
   data() {
     const filter = new ColorFilter();
     const types = [{ name: 'None', value: null }];
@@ -36,10 +39,9 @@ export default {
     },
     updateCodeExample(value) {
       this.currentExample =
-        'import { ColorFilter } from "...";\n' +
         (null === value
-          ? ' filter.removeFilter()'
-          : ` const filter = new ColorFilter(); \n filter.changeFilter('${value}')`);
+          ? 'filter.removeFilter()'
+          : `const filter = new ColorFilter(); \n\n filter.changeFilter('${value}')`) ;
     }
   },
   mounted() {
@@ -54,15 +56,19 @@ export default {
 .filter {
   display: flex;
 
-  &__example {
-    &__image {
-      width: 100%;
-      max-width: 50rem;
-    }
+  &__label {
+    opacity: 0.54;
   }
 
-  &__column {
-    width: 50%;
+  &__select {
+    margin-top: 0 !important;
+  }
+
+  &__image {
+    height: 20.6rem;
+    width: 100%;
+    min-width: 36.6rem;
+    margin-bottom: 1.1rem;
   }
 }
 </style>

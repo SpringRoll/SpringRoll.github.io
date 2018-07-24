@@ -1,5 +1,9 @@
 <script>
+import Example from '@/components/Example';
 export default {
+  components: {
+    Example
+  },
   name: 'Controls',
   props: ['selected'],
   watch: {

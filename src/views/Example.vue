@@ -1,8 +1,8 @@
 <template>
   <div class="example">
-    <router-link class="example__link" v-for="route of routes" :key="route.name" :to="route">
+    <v-btn flat exact-active-class="--active-route" class="example__link font-semi-bold font-21" v-for="route of routes" :key="route.name" :to="route">
       {{ route.name }}
-    </router-link>
+    </v-btn>
     <router-view class="example__content" />
   </div>
 
@@ -33,21 +33,33 @@ export default {
 
 
 <style lang="scss">
+@import "~@/scss/colors";
 .example {
   width: 100%;
   height: 100%;
+  margin-top: 3.9rem;
+
+  .v-btn--active:before,
+  .v-btn:hover:before,
+  .v-btn:focus:before {
+    color: transparent;
+  }
 
   &__nav {
     display: flex;
   }
   &__content {
-    margin: 1.5rem;
+    margin: 7rem;
   }
 
   &__link {
-    color: black;
-    font-weight: bold;
+    color: $accent !important;
     margin-right: 0.75rem;
+
+    &.--active-route {
+      background-color: $accent;
+      color: $white !important;
+    }
   }
 }
 </style>

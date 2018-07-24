@@ -1,20 +1,24 @@
 <template>
-  <div>
-    <h2>Try resizing the window</h2>
-    <div class="flex-container">
-      <div class="column">
-        <h2>Width: {{size.width}} </h2>
-        <h2>Height: {{size.height}}</h2>
-        <h2>Scale: {{size.ratio}}</h2>
+  <Example title="Window Dimensions">
+    <div slot="example" class="scale__column code-example">
+      <span class="font-16 font scale__blurb">Try resizing the window</span>
+      <div class="scale__properties">
+        <h3 class="font-21 font-semi-bold scale__property">Width: {{size.width}} </h3>
+        <h3 class="font-21 font-semi-bold scale__property">Height: {{size.height}}</h3>
+        <h3 class="font-21 font-semi-bold scale__property">Scale: {{size.ratio}}</h3>
       </div>
-      <pre class="column example" v-highlightjs="currentExample"><code class="javascript"></code></pre>
     </div>
-  </div>
+    <pre slot="code" v-highlightjs="currentExample"><code class="javascript code-block"></code></pre>
+  </Example>
 </template>
 
 <script>
 import { ScaleManager } from 'springroll-2';
+import Example from '@/components/Example';
 export default {
+  components: {
+    Example
+  },
   data() {
     return {
       manager: new ScaleManager(),
@@ -28,7 +32,7 @@ export default {
   },
   methods: {
     updateCurrentExample(e) {
-      this.currentExample = `import { ScaleManager } from '...';\n const manager = new ScaleManager(); \n manager.enable(e => {\n  console.log(e.width); //${
+      this.currentExample = `const manager = new ScaleManager(); \n\n manager.enable(e => {\n  console.log(e.width); //${
         e.width
       } \n  console.log(e.height}); //${e.height} \n  console.log(e.ratio) //${
         e.ratio
@@ -52,11 +56,28 @@ export default {
 </script>
 
 <style lang="scss">
-// .example {
-//   max-width: 30rem;
-// }
-.target {
-  background: lightgreen;
-  resize: both;
+.scale {
+  width: 100%;
+  &__content {
+    display: flex;
+  }
+
+  &__property {
+    margin-bottom: 0.8rem;
+  }
+
+  &__properties {
+    margin-top: 1.4rem;
+    margin-left: 11.2rem;
+  }
+
+  &__blurb {
+    margin-top: 1.8rem;
+  }
+
+  .code-block {
+    margin-top: 1.8rem;
+    height: 15rem;
+  }
 }
 </style>

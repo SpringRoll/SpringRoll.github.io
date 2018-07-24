@@ -1,27 +1,27 @@
 <template>
-  <div>
-    <h1>
-      Controls
-    </h1>
-    <div class="flex-container">
-      <div class="column">
-        <div v-for="(value, key) in enabled" :key="key">
+  <Example title="Key Controls">
 
-          <v-btn disabled>
-            <v-btn :class="{error: !value, primary: value}">
-              {{' ' !== key ? key : 'Space Bar' }}
-            </v-btn>
+    <div slot="example">
+      <div v-for="(value, key) in enabled" :key="key">
+
+        <v-btn disabled>
+          <v-btn :class="{error: !value, primary: value}">
+            {{' ' !== key ? key : 'Space Bar' }}
           </v-btn>
-        </div>
+        </v-btn>
       </div>
-      <pre class="column" v-highlightjs="currentExample"><code class="javascript"></code></pre>
     </div>
-  </div>
+    <pre slot="code" v-highlightjs="currentExample"><code class="javascript code-block"></code></pre>
+  </Example>
 </template>
 
 <script>
 import { Controller } from 'springroll-2';
+import Example from '@/components/Example';
 export default {
+  components: {
+    Example
+  },
   data() {
     const listeners = [
       'w',
