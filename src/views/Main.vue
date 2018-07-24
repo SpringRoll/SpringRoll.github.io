@@ -26,10 +26,10 @@ export default {
 @import "~@/scss/colors";
 
 .main {
-  margin-top: 11.5rem;
   align-items: center;
   display: flex;
   flex-direction: column;
+  margin-top: 11.5rem;
 
   &::before,
   &::after {
@@ -51,23 +51,25 @@ export default {
   }
 
   &__logo {
-    width: 11.8rem;
     height: 11.8rem;
     margin-bottom: 0.8rem;
+    width: 11.8rem;
   }
 
   &__title {
-    color: $primary;
-    @extend .font-aleo;
     @extend .font-66;
+    @extend .font-aleo;
+    color: $primary;
   }
 
   &__about {
-    width: 66rem;
-    height: 15rem;
-    margin-top: 5.3rem;
     @extend .font-21;
     @extend .font-light;
+    color: $secondary;
+    height: 15rem;
+    margin-top: 5.3rem;
+    width: 66rem;
+    text-align: center;
   }
 }
 </style>
