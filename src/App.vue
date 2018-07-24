@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <v-toolbar app class="nav__bar">
-      <v-btn flat active-class="nav__active" class="nav__button --logo" to="/"><img class=" nav__logo" src="@/assets/logo.png" alt="logo"></v-btn>
-      <v-btn flat active-class="nav__active" class="nav__button nav__text font-21" to="/examples">Examples</v-btn>
-      <v-btn flat active-class="nav__active" class="nav__button nav__text font-21" to="/docs">Docs</v-btn>
-      <v-btn flat active-class="nav__active" class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll" target="_blank">Github</v-btn>
-      <v-btn flat active-class="nav__active" class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll/wiki" target="_blank">Wiki</v-btn>
+      <router-link exact-active-class="--active" class="nav__button --logo" to="/"><img class=" nav__logo" src="@/assets/logo.png" alt="logo" /></router-link>
+      <router-link active-class="--active" class="nav__button nav__text font font-21" to="/examples">Examples</router-link>
+      <router-link active-class="--active" class="nav__button nav__text font font-21" to="/docs">Docs</router-link>
+      <a class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll" target="_blank">Github</a>
+      <a class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll/wiki" target="_blank">Wiki</a>
     </v-toolbar>
     <v-content>
       <router-view/>
@@ -43,28 +43,36 @@ export default {
 .nav {
   &__bar {
     .v-toolbar__content {
+      min-height: 5.6rem;
       padding-left: 0;
     }
   }
   &__text {
     @extend .font-21;
-    @extend .font;
+    color: $black;
+    text-decoration: none;
     text-transform: capitalize;
+
+    &.--active {
+      @extend .font-semi-bold;
+    }
   }
 
   &__button {
-    height: 100% !important;
-    margin: 0 !important;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    margin: 0;
+    padding: 2.4rem;
+
+    &.--active {
+      border-bottom: 0.2rem solid $accent;
+    }
   }
 
   &__logo {
-    width: 2.8rem;
     height: 2.8rem;
-  }
-
-  &__active.nav__text {
-    border-bottom: 0.2rem solid $accent;
-    @extend .font-semi-bold;
+    width: 2.8rem;
   }
 }
 </style>

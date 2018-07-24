@@ -2,36 +2,24 @@ import Vue from 'vue';
 import {
   Vuetify,
   VApp,
-  VNavigationDrawer,
-  VFooter,
-  VList,
   VBtn,
-  VIcon,
   VGrid,
   VToolbar,
   VTextField,
   VSlider,
-  VSubheader,
-  VSelect,
-  transitions
+  VSelect
 } from 'vuetify';
 import 'vuetify/src/stylus/app.styl';
 
 Vue.use(Vuetify, {
   components: {
     VApp,
-    VNavigationDrawer,
-    VFooter,
-    VList,
     VBtn,
-    VIcon,
     VGrid,
     VToolbar,
     VTextField,
     VSlider,
-    VSubheader,
-    VSelect,
-    transitions
+    VSelect
   },
   theme: {
     primary: '#095B8F',
