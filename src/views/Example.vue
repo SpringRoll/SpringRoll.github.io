@@ -63,12 +63,9 @@ export default {
 
     &.--active {
       background-color: $accent;
-      color: $white;
-
-      border-radius: 2px;
       background-color: $accent;
-      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24),
-        0 0 8px 0 rgba(0, 0, 0, 0.12), 0 8px 8px 0 rgba(0, 0, 0, 0.24);
+      border-radius: 2px;
+      color: $white;
     }
   }
 }
