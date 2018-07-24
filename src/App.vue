@@ -39,21 +39,24 @@ export default {
 
 <style lang="scss">
 @import "~@/scss/colors";
+@import "~@/scss/fonts";
 .nav {
   &__bar {
     .v-toolbar__content {
       padding-left: 0 !important;
+      height: 5.6rem !important;
     }
   }
   &__text {
-    font-weight: 600;
+    @extend .font-21;
+    @extend .font;
     text-transform: capitalize;
   }
 
   &__button {
-    height: 100%;
-    padding: 0 2.2rem;
-    margin: 0;
+    height: 100% !important;
+    padding: 0 2.2rem !important;
+    margin: 0 !important;
   }
 
   &__logo {

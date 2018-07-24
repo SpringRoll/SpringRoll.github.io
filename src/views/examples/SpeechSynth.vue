@@ -1,38 +1,35 @@
 <template>
   <div>
     <div class="synth">
-      <div class="column">
-        <h2>Speech Synth</h2>
-        <div class="column">
-          <v-text-field @input="updateCurrentExample()" v-model="message" label="What to Say" />
-          <v-btn @click="say()" color="success" :disabled="1 > message.length">Speak</v-btn>
-        </div>
-
-        <div class="example">
-          <pre v-highlightjs="currentExample"><code class="javascript"></code></pre>
-        </div>
+      <span class="font-28 font-semi-bold">Modifiers</span>
+      <div class="synth__column">
+        <label class="synth__label font-12 font">Volume</label>
+        <v-text-field class="synth__input --text font-16" @input="updateCurrentExample()" v-model="message" />
+        <!-- <v-btn @click="say()" color="success" :disabled="1 > message.length">Speak</v-btn> -->
+        <label class="synth__label font-12 font">Volume</label>
+        <v-slider class="synth__input" color="accent" thumb-label v-model="volume" :ticks="true" min="0" max="1" step="0.1" @input="onVolume()" />
+        <label class="synth__label font-12 font">Rate</label>
+        <v-slider class="synth__input" color="accent" thumb-label v-model="rate" :ticks="true" min="0.1" max="10" step="0.1" @input="onRate()" />
+        <label class="synth__label font-12 font">Pitch</label>
+        <v-slider class="synth__input" color="accent" thumb-label v-model="pitch" :ticks="true" min="0" max="2" step="0.1" @input="onPitch()" />
+        <label class="synth__label font-12 font">Voice</label>
+        <v-slider class="synth__input" color="accent" thumb-label v-model="voice" :ticks="true" min="0" :max="totalVoices" @input="onVoice()" step="1" :disabled="1 > totalVoices" />
       </div>
 
-      <div class="column">
-        <h2>Modifiers</h2>
-        <div class="controls">;
-          <v-slider label="Volume" v-model="volume" :ticks="true" min="0" max="1" step="0.1" @input="onVolume()" />
-          <v-slider label="Rate" v-model="rate" :ticks="true" min="0.1" max="10" step="0.1" @input="onRate()" />
-          <v-slider label="Pitch" v-model="pitch" :ticks="true" min="0" max="2" step="0.1" @input="onPitch()" />
-          <v-slider label="Voice" v-model="voice" :ticks="true" min="0" :max="totalVoices" @input="onVoice()" step="1" :disabled="1 > totalVoices" />
+    </div>
 
-          <div v-if="0 < totalVoices" class="voice-info">
-            <h4>Voice Name: {{speakerName}}</h4>
-            <h4>Language: {{speakerLang}}</h4>
-          </div>
-        </div>
-      </div>
+    <div class="synth__column">
     </div>
   </div>
 
 </template>
 
+
+
 <script>
+// <div class="example">
+//           <pre v-highlightjs="currentExample"><code class="javascript"></code></pre>
+//         </div>
 import { SpeechSynth } from 'springroll-2';
 
 export default {
@@ -99,14 +96,23 @@ export default {
 </script>
 
 <style lang="scss">
-.short {
-  max-height: 10rem;
-}
+@import "~@/scss/fonts";
 .synth {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  max-width: 65rem;
+  &__label {
+    opacity: 0.54;
+  }
+
+  &__input {
+    margin-top: 0 !important;
+
+    &.--text {
+      // color: rgba(0, 0, 0, 0.87) !important;
+      .v-input__control > .v-input__slot > input[type="text"] {
+        color: rgba(0, 0, 0, 0.87);
+        @extend .font-16;
+      }
+    }
+  }
 }
 .controls {
   // max-width: 30rem;
@@ -117,7 +123,6 @@ export default {
 // }
 
 .column {
-  min-width: 30rem;
 }
 
 .voice-info {

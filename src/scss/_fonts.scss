@@ -1,4 +1,4 @@
-$font-path: '../assets/fonts/';
+$font-path: '~@/assets/fonts/';
 $font-aleo: $font-path + 'Aleo-Regular.otf';
 $font-path-assistant: $font-path + 'Assistant/Assistant-';
 
@@ -82,6 +82,10 @@ $body-font-family: $assistant;
 .font-aleo {
   font-family: $aleo;
   font-weight: normal;
+}
+
+.font-12 {
+  @include font-size(1.2, 1.6);
 }
 
 .font-16 {
