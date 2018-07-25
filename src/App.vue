@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    <!-- <v-toolbar app class="nav__bar">
+    <v-toolbar app class="nav__bar --full">
       <router-link exact-active-class="--active" class="nav__button --logo" to="/"><img class=" nav__logo" src="@/assets/logo.png" alt="logo" /></router-link>
       <router-link active-class="--active" class="nav__button nav__text font font-21" to="/examples">Examples</router-link>
       <router-link active-class="--active" class="nav__button nav__text font font-21" to="/docs">Docs</router-link>
       <a class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll" target="_blank">Github</a>
       <a class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll/wiki" target="_blank">Wiki</a>
-    </v-toolbar> -->
+    </v-toolbar>
     <v-toolbar app class="nav__bar --compact">
       <router-link class="nav__button --logo" to="/"><img class=" nav__logo" src="@/assets/logo.png" alt="logo" /></router-link>
       <v-icon @click="drawer = !drawer">menu
@@ -52,12 +52,25 @@ export default {
       padding-left: 0;
       width: 100vw;
       display: flex;
-      justify-content: space-between;
     }
 
     &.--compact {
-      display: flex;
+      display: none;
       justify-content: space-between;
+    }
+
+    @media screen and (max-width: 768px) {
+      &.--compact {
+        display: flex;
+      }
+
+      &.--full {
+        display: none;
+      }
+
+      .v-toolbar__content {
+        justify-content: space-between;
+      }
     }
   }
   &__text {
