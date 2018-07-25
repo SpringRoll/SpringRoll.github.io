@@ -50,9 +50,20 @@ export default {
   &__nav {
     margin-top: 6.9rem;
     margin-left: 4.8rem;
+
+    @media screen and (max-width: 768px) {
+      margin-left: 0.5rem;
+      display: flex;
+      flex-direction: column;
+    }
   }
   &__content {
     margin: 7rem;
+
+    @media screen and (max-width: 768px) {
+      margin: 0;
+      padding: 1rem;
+    }
   }
 
   &__link {
@@ -60,6 +71,10 @@ export default {
     margin-right: 0.75rem;
     text-decoration: none;
     padding: 0.5rem 1rem;
+
+    // @media screen and (max-width: 768px) {
+    //   margin-bottom: 4rem;
+    // }
 
     &.--active {
       background-color: $accent;

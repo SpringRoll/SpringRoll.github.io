@@ -25,13 +25,12 @@ export default {
     display: flex;
     flex-direction: column;
     height: 26.4rem;
-    margin-right: 10.3rem;
     margin-right: 10.9rem;
     width: 37.8rem;
 
-    @media screen and (max-width: 786px) {
+    @media screen and (max-width: 768px) {
       &.--row {
-        margin-top: 3rem;
+        padding-top: 12rem;
       }
     }
   }
@@ -40,7 +39,7 @@ export default {
     display: flex;
     width: 100%;
 
-    @media screen and (max-width: 786px) {
+    @media screen and (max-width: 768px) {
       flex-direction: column;
     }
   }

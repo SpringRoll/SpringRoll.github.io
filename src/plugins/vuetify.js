@@ -7,7 +7,10 @@ import {
   VToolbar,
   VTextField,
   VSlider,
-  VSelect
+  VSelect,
+  VList,
+  VIcon,
+  VNavigationDrawer
 } from 'vuetify';
 import 'vuetify/src/stylus/app.styl';
 
@@ -19,7 +22,10 @@ Vue.use(Vuetify, {
     VToolbar,
     VTextField,
     VSlider,
-    VSelect
+    VSelect,
+    VList,
+    VIcon,
+    VNavigationDrawer
   },
   theme: {
     primary: '#095B8F',

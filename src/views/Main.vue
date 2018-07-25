@@ -9,17 +9,6 @@
   </div>
 </template>
 
-<script>
-import Game from '@/components/Game';
-export default {
-  components: {
-    Game
-  }
-};
-</script>
-
-
-
 <style lang="scss">
 @import "~@/scss/mixins";
 @import "~@/scss/fonts";
@@ -29,7 +18,13 @@ export default {
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin-top: 11.5rem;
+  padding-top: 11.5rem;
+  width: 100%;
+  height: 100%;
+
+  @media screen and (max-width: 768px) {
+    padding: 3rem 7rem 0;
+  }
 
   &::before,
   &::after {
@@ -44,10 +39,16 @@ export default {
 
   &::before {
     background-image: url("~@/assets/svg/wave1.svg");
+    @media screen and (max-width: 768px) {
+      background-image: none;
+    }
   }
 
   &::after {
     background-image: url("~@/assets/svg/wave2.svg");
+    @media screen and (max-width: 768px) {
+      background-image: none;
+    }
   }
 
   &__logo {
@@ -68,7 +69,8 @@ export default {
     color: $secondary;
     height: 15rem;
     margin-top: 5.3rem;
-    width: 66rem;
+    max-width: 66rem;
+
     text-align: center;
   }
 }
