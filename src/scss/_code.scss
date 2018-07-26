@@ -1,0 +1,12 @@
+$standard-width: 37.8rem;
+.code-block {
+  @extend .font-12;
+  color: $black;
+  background-color: $code-background;
+  width: $standard-width;
+  min-height: 26.4rem;
+}
+
+.code-example {
+  width: $standard-width;
+}
