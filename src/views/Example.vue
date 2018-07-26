@@ -26,6 +26,9 @@ export default {
         },
         {
           name: 'Controls'
+        },
+        {
+          name: 'Bellhop'
         }
       ]
     };
@@ -77,7 +80,6 @@ export default {
     // }
 
     &.--active {
-      background-color: $accent;
       background-color: $accent;
       border-radius: 2px;
       color: $white;

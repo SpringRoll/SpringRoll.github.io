@@ -11,6 +11,7 @@ import SpeechSynth from '@/views/examples/SpeechSynth';
 import ColorFilter from '@/views/examples/ColorFilter';
 import ScaleManager from '@/views/examples/ScaleManager';
 import Controls from '@/views/examples/Controls';
+import Bellhop from '@/views/examples/Bellhop';
 
 Vue.use(Router);
 
@@ -56,6 +57,11 @@ export default new Router({
           path: 'controls',
           name: 'Controls',
           component: Controls
+        },
+        {
+          path: 'bellhop',
+          name: 'Bellhop',
+          component: Bellhop
         }
       ]
     }

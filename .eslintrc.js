@@ -9,7 +9,8 @@ module.exports = {
   globals: {
     assert: true,
     expect: true,
-    should: true
+    should: true,
+    springroll: true
   },
   plugins: ["node", "prettier"],
   extends: ["eslint:recommended", "plugin:vue/essential"],
