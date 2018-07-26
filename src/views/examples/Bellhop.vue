@@ -1,0 +1,87 @@
+<template>
+
+  <Example>
+    <div class="iframe__game" slot="example">
+      <iframe class="iframe__game" id="iframe"></iframe>
+      <br/>
+      <div class="iframe__controls">
+        <v-btn id="pause">Pause</v-btn>
+        <v-btn id="captions">Toggle Captions</v-btn>
+        <v-btn id="sound">Toggle Mute</v-btn>
+      </div>
+    </div>
+    <div slot="code">
+      <pre slot="code" v-highlightjs="`
+//Main
+const container =  new springroll.Container('#iframe', {
+  pauseButton: ['#pause'],
+  soundButton: '#sound',
+  captionsButton: '#captions'
+});
+
+//iframe
+import { Application } from 'springroll-2';
+
+const app = new Application({
+  captions: true,
+  sound: true
+});
+
+app.state.pause.subscribe(isPaused => updateElem('paused', isPaused));
+
+app.state.captionsMuted.subscribe(captionsMuted =>
+  updateElem('captions', captionsMuted)
+);
+
+app.state.soundMuted.subscribe(soundMuted => updateElem('muted', soundMuted));
+
+function updateElem(elem, data) {
+  document.getElementById(elem).innerText = data;
+}
+
+window.app = app;`"><code class="javascript code-block"></code></pre>
+    </div>
+  </Example>
+</template>
+
+<script>
+import Iframe from '@/mixins/Iframe';
+import Example from '@/components/Example';
+
+export default {
+  mixins: [Iframe],
+  components: {
+    Example
+  },
+  mounted() {
+
+    const container =  new springroll.Container('#iframe', {
+      pauseButton: ['#pause'],
+      soundButton: '#sound',
+      captionsButton: '#captions'
+    });
+
+    this.container = container;
+
+    this.container.openPath(this.base + 'child.html');
+  },
+
+  destroyed() {
+    this.container.destroy();
+  }
+
+};
+</script>
+
+<style lang="scss">
+.iframe {
+  &__game {
+    width: 100%;
+  }
+
+  &__controls {
+    width: 100%;
+    display: flex;
+  }
+}
+</style>

@@ -28,7 +28,7 @@ export default {
           name: 'Controls'
         },
         {
-          name: 'Application'
+          name: 'Bellhop'
         }
       ]
     };
