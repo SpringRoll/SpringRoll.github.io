@@ -4,7 +4,7 @@ import Router from 'vue-router';
 import Example from '@/views/Example';
 import Main from '@/views/Main';
 import Docs from '@/views/Docs';
-import CaptionStudio from '@/views/Captions';
+import CaptionStudio from '@/views/CaptionStudio';
 
 // Example views
 import SpeechSynth from '@/views/examples/SpeechSynth';

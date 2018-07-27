@@ -4,8 +4,7 @@ import App from './App.vue';
 import router from './router';
 
 // Plugins
-import './plugins/vuetify';
-import './plugins/highlight';
+import './plugins';
 
 // Styles
 import './scss/main.scss';

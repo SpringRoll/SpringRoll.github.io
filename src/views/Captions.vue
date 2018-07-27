@@ -3,7 +3,6 @@
     <header class="header">
       <h1>Captions Studio</h1>
       <v-btn class="load-btn btn primary">
-        <v-icon>{{'input'}}</v-icon>
         <input class="fileInput" @change="onDirChange" type="file" webkitdirectory="" multiple="">
       </v-btn>
     </header>
@@ -17,6 +16,7 @@
 <script>
 import Controls from '@/components/captions/Controls';
 import List from '@/components/captions/List';
+import { FileProcessor } from '@/class/FileProcessor';
 export default {
   name: 'captions',
   components: {
@@ -34,6 +34,8 @@ export default {
       this.selected = file;
     },
     onDirChange($event) {
+      const f = new FileProcessor($event.target.files);
+      console.log(f.fileTree);
       this.files = Array.from($event.target.files)
         .map(function(files) {
           while (Array.isArray(files[0])) {
