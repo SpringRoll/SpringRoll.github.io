@@ -1,7 +1,10 @@
 <template>
   <div class="explorer">
     <v-text-field class="explorer__search" @input="filter" prepend-inner-icon="search" placeholder="Search file names" solo />
-    <file-directory class="explorer__dir" v-if="hasFiles" @click="fileChecked" :input="fileTree" :checked="checked" />
+    <h3 class="font-28 font-semi-bold explorer__header">Files</h3>
+    <div class="explorer__dir">
+      <file-directory v-for="(value, key) in fileTree" :key="key" v-if="hasFiles" @click="fileSelected" :input="value" :name="key" :selected="selected" />
+    </div>
     <div color="accent" class="v-btn accent explorer__input font-semi-bold font-16">
       <span>Import Files</span>
       <input class="explorer__file-input" @change="loadFiles" type="file" webkitdirectory="" multiple="">
@@ -22,7 +25,7 @@ export default {
       fileTree: {},
       fileList: null,
       hasFiles: false,
-      checked: null
+      selected: null
 
     };
   },
@@ -41,9 +44,9 @@ export default {
       this.fileList = $event.target.files;
       this.fileTree = this.factory.process($event.target.files);
     },
-    fileChecked($file) {
+    fileSelected($file) {
 
-      this.checked = $file;
+      this.selected = $file;
     }
   }
 };
@@ -69,6 +72,13 @@ export default {
     position: relative;
     margin-top: 1.5rem !important;
     flex: end;
+  }
+
+  &__header {
+    align-self: flex-start;
+    padding-left: 4.2rem;
+    margin-bottom: 0.8rem;
+    color: $secondary;
   }
 
   &__search {

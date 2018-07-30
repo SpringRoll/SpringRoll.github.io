@@ -29,7 +29,6 @@ export class FileProcessor {
       for (let i = 0, l = files.length; i < l; i++) {
         this.addFileToTree(files[i]);
       }
-      console.log('files', this.fileTree);
       return this.fileTree;
     }
 

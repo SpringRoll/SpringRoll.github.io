@@ -1,27 +1,30 @@
 <template>
-  <div class="directory">
-    <div v-if="'' !== name">
-      <v-btn flat class="directory__button">
-        <div class="directory__dir font-semi-bold font-16">
-          <span>{{name}}</span>
-        </div>
-      </v-btn>
-      <!-- <span class="directory__dir-icon"> &#8963; </span> -->
-    </div>
-    <h3 v-else> Files </h3>
-    <div v-for="(value,key) in input" :key="key" v-if="isFile(value)">
-      <div class="directory__file">
-        <input :id="`${key}_${value.name}`" class="directory__select" type="radio" v-on:click="$emit('click', value)" name="selectedFile" :value="value.name" :checked="value === checked" />
-        <label :for="`${key}_${value.name}`" class="font-16 directory__label">{{value.name}}</label>
-      </div>
-    </div>
-    <file-directory class="directory__nested" v-else @click="$emit('click', $event)" :input="value" :name="key" />
-  </div>
+  <v-list>
+    <v-list-group class="directory" :value="true">
+      <v-list-tile slot="activator">
+        <v-list-tile-content>
+          <v-list-tile-title class="directory__name font-semi-bold font-16"> {{ name }} </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile-content v-for="(value,key) in input" :key="key" v-if="isFile(value)">
+        <label class="directory__file">
+          <input :id="`${key}_${value.name}`" class="directory__select" @change="emit" type="radio" name="selectedFile" :value="value" :checked="isSelected(value)" />
+          <label :for="`${key}_${value.name}`" class="font-16 directory__label">{{value.name}}</label>
+        </label>
+      </v-list-tile-content>
+      <file-directory v-else @click="$emit('click', $event)" :input="value" :name="key" :sub="true" :selected="selected" />
+    </v-list-group>
+  </v-list>
 </template>
 
 <script>
 export default {
   name: 'file-directory',
+  data() {
+    return {
+      fileModel: this.selected
+    };
+  },
   props: {
     input: {
       type: Object,
@@ -31,43 +34,34 @@ export default {
       type: String,
       default: ''
     },
-    checked: File,
+    selected: File,
+    sub: {
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
     isFile(file) {
       return file instanceof File;
+    },
+    isSelected(file) {
+      return this.isFile(this.selected) && this.isFile(file) && file.webkitRelativePath === this.selected.webkitRelativePath;
+    },
+    emit($event) {
+      this.$emit('click', $event.target._value);
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@/scss/fonts";
 @import "~@/scss/colors";
 .directory {
   $this: &;
-  padding: 0 1rem;
 
-  &__nested {
-    border-left: 2px solid $selected;
-  }
-
-  &__button {
-    width: 100%;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  &__dir {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+  &__name {
     color: $secondary;
-  }
-
-  &__dir-icon {
-    position: absolute;
-    right: 2rem;
   }
 
   &__file {
@@ -75,6 +69,8 @@ export default {
     color: $secondary;
     display: flex;
     height: 3.2rem;
+
+    padding-left: 2rem;
   }
 
   &__select {
@@ -105,6 +101,27 @@ export default {
     width: 100%;
     height: 100%;
   }
+}
+
+.v-list,
+.theme--light .v-list,
+.application
+  .theme--light.v-list
+  .theme--light
+  .v-list
+  .v-list__group--active:before,
+.application .theme--light.v-list .v-list__group--active:before,
+.theme--light .v-list .v-list__group--active:after,
+.application .theme--light.v-list .v-list__group--active:after {
+  background: transparent !important;
+  color: $black !important;
+}
+
+.theme--light .v-list .v-list__group--active:before,
+.application .theme--light.v-list .v-list__group--active:before,
+.theme--light .v-list .v-list__group--active:after,
+.application .theme--light.v-list .v-list__group--active:after {
+  background: transparent !important;
 }
 </style>
 
