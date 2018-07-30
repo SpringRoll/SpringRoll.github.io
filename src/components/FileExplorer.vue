@@ -32,7 +32,7 @@ export default {
   methods: {
     filter($event) {
       this.factory.setNameFilter($event);
-      this.fileTree = this.factory.process(this.fileList);
+      this.fileTree = this.factory.generateFileTree(this.fileList);
     },
     loadFiles($event) {
       if (!$event.target.files.length) {
@@ -42,7 +42,7 @@ export default {
 
       this.hasFiles = true;
       this.fileList = $event.target.files;
-      this.fileTree = this.factory.process($event.target.files);
+      this.fileTree = this.factory.generateFileTree($event.target.files);
     },
     fileSelected($file) {
 
