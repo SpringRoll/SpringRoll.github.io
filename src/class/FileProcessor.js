@@ -1,38 +1,46 @@
 import { merge } from 'lodash-es';
+
+/**
+ * @typedef FileProcessorOptions
+ * @property {RegExp} fileFilter
+ * @property {string} nameFilter
+ *
+ * @export
+ * @class FileProcessor
+ */
 export class FileProcessor {
   /**
    * Creates an instance of FileProcessor.
    * @param {FileList} files
-   * @memberof FileProcessor
+   * @param {FileProcessorOptions} options
    */
   constructor(
     files = null,
     { fileFilter = /.(mp3|ogg)$/, nameFilter = '' } = {}
   ) {
-    this.fileCount = 0;
-    this.fileTree = {};
-    this.process(files);
+    this.clear();
+    this.generateFileTree(files);
     this.fileFilter = fileFilter;
     this.setNameFilter(nameFilter);
   }
 
   /**
-   * Processes a file list and return it as a object
+   * Processes a file list and returns a object containing the files in a Object with correct directories
    * @param {FileList} files
    * @returns object
    * @memberof FileProcessor
    */
-  process(files) {
-    if (files instanceof FileList) {
-      this.fileTree = {};
-      this.fileCount = 0;
-      for (let i = 0, l = files.length; i < l; i++) {
-        this.addFileToTree(files[i]);
-      }
-      return this.fileTree;
+  generateFileTree(files) {
+    if (!(files instanceof FileList)) {
+      return;
     }
 
-    return {};
+    this.clear();
+
+    for (let i = 0, l = files.length; i < l; i++) {
+      this.addFileToTree(files[i]);
+    }
+    return this.fileTree;
   }
 
   /**
@@ -86,6 +94,7 @@ export class FileProcessor {
    */
   clear() {
     this.fileTree = {};
+    this.fileCount = 0;
   }
 
   /**

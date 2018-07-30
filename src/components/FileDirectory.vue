@@ -12,7 +12,7 @@
           <label :for="`${key}_${value.name}`" class="font-16 directory__label">{{value.name}}</label>
         </label>
       </v-list-tile-content>
-      <file-directory v-else @click="$emit('click', $event)" :input="value" :name="key" :sub="true" :selected="selected" />
+      <file-directory class="directory__nested" v-else @click="$emit('click', $event)" :input="value" :name="key" :sub="true" :selected="selected" />
     </v-list-group>
   </v-list>
 </template>
@@ -71,6 +71,10 @@ export default {
     height: 3.2rem;
 
     padding-left: 2rem;
+  }
+
+  &__nested {
+    padding-left: 1rem;
   }
 
   &__select {
