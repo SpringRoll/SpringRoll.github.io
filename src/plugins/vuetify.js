@@ -41,3 +41,5 @@ Vue.use(Vuetify, {
     warning: '#FFC107'
   }
 });
+
+import './vuetify.styl';

@@ -1,13 +1,15 @@
 <template>
   <v-list>
-    <v-list-group class="directory" :value="true">
-      <v-list-tile slot="activator">
+    <v-list-group class="directory" :value="true" prepend-icon="folder">
+      <v-list-tile slot="activator" class="directory__dir-name">
         <v-list-tile-content>
           <v-list-tile-title class="directory__name font-semi-bold font-16"> {{ name }} </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile-content v-for="(value,key) in input" :key="key" v-if="isFile(value)">
+
         <label class="directory__file">
+          <v-icon class="directory__icon" :class="{'--active': isSelected(value)}">audiotrack</v-icon>
           <input :id="`${key}_${value.name}`" class="directory__select" @change="emit" type="radio" name="selectedFile" :value="value" :checked="isSelected(value)" />
           <label :for="`${key}_${value.name}`" class="font-16 directory__label">{{value.name}}</label>
         </label>
@@ -20,11 +22,6 @@
 <script>
 export default {
   name: 'file-directory',
-  data() {
-    return {
-      fileModel: this.selected
-    };
-  },
   props: {
     input: {
       type: Object,
@@ -64,13 +61,21 @@ export default {
     color: $secondary;
   }
 
+  &__icon {
+    padding-right: 1.7rem;
+
+    &.--active {
+      color: $secondary;
+    }
+  }
+
   &__file {
     align-items: center;
     color: $secondary;
     display: flex;
     height: 3.2rem;
 
-    padding-left: 2rem;
+    padding-left: 1.5rem;
   }
 
   &__nested {
@@ -90,8 +95,8 @@ export default {
       position: absolute;
       content: " ";
       z-index: 0;
-      left: 0;
-      right: 0;
+      left: -10rem;
+      right: -10rem;
       height: 3.2rem;
       background-color: rgba(153, 153, 153, 0.2);
     }
@@ -105,6 +110,10 @@ export default {
     width: 100%;
     height: 100%;
   }
+}
+
+.v-list__tile {
+  padding: 0 0.5rem !important;
 }
 
 .v-list,

@@ -64,6 +64,7 @@ export default {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  resize: horizontal;
 
   &__input {
     width: 24.2rem;
