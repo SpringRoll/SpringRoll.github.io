@@ -47,6 +47,7 @@ export default {
     fileSelected($file) {
 
       this.selected = $file;
+      this.$emit('file', this.selected);
     }
   }
 };
