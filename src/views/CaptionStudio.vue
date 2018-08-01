@@ -1,8 +1,8 @@
 <template>
   <div class="caption__studio">
-    <FileExplorer @file="loadFile" />
+    <FileExplorer/>
     <div class="caption__container">
-      <WaveSurfer :file="file" />
+      <WaveSurfer />
       <div>TODO: TEXT PREVIEW</div>
       <div>TODO: TEXT EDTIOR
         <div>TODO: Start time and end time</div>
@@ -30,13 +30,6 @@ export default {
   components: {
     FileExplorer,
     WaveSurfer
-  },
-  methods: {
-    loadFile($event) {
-      if ($event instanceof File) {
-        this.file = $event;
-      }
-    }
   }
 };
 </script>

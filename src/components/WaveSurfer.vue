@@ -6,13 +6,13 @@
         <v-btn @click="rewind" class="wave__button" icon small>
           <v-icon>fast_rewind</v-icon>
         </v-btn>
-        <v-btn class="wave__button" icon small>
+        <v-btn @click="previous" class="wave__button" icon small>
           <v-icon>skip_previous</v-icon>
         </v-btn>
         <v-btn @click="play" class="wave__button" icon small>
           <v-icon> {{ isPlaying ? 'pause' : 'play_arrow' }}</v-icon>
         </v-btn>
-        <v-btn class="wave__button" icon small>
+        <v-btn @click="next" class="wave__button" icon small>
           <v-icon>skip_next</v-icon>
         </v-btn>
         <v-btn @click="forward" class="wave__button" icon small>
@@ -29,6 +29,8 @@
 
 <script>
 import WaveSurfer from 'wavesurfer.js';
+import { EventBus } from '@/class/EventBus';
+
 export default {
   data() {
     return {
@@ -44,15 +46,6 @@ export default {
       const seconds = this.currentTime % 60 | 0;
       const miliSeconds = ((this.currentTime % 1) * 100) | 0;
       return `${prepend(minutes)}:${prepend(seconds)}:${prepend(miliSeconds)}`;
-    }
-  },
-  props: ['file'],
-  watch: {
-    file(file) {
-      if (file instanceof File) {
-        this.isPlaying = false;
-        this.wave.loadBlob(file);
-      }
     }
   },
   methods: {
@@ -90,11 +83,29 @@ export default {
     play() {
       this.wave.playPause();
       this.isPlaying = this.wave.isPlaying();
+    },
+
+    previous() {
+      EventBus.$emit('previous_file');
+    },
+    next() {
+      EventBus.$emit('next_file');
+    },
+
+    loadFile($event) {
+      if ($event.file instanceof File) {
+        this.isPlaying = false;
+        this.wave.loadBlob($event.file);
+      }
     }
 
   },
   mounted() {
     this.initWave();
+    EventBus.$on('file_selected', this.loadFile);
+  },
+  destroyed() {
+    EventBus.$off('file_selected', this.loadFile);
   }
 
 };
