@@ -55,17 +55,18 @@ export default {
     },
     initWave() {
       this.wave = WaveSurfer.create({
-        mediaType: 'audio',
         container: '#wave__container',
-        waveColor: '#0C7AC0',
-        progressColor: 'rgba(0,0,0,0)',
-        minPxPerSec: 100,
-        height: 201,
-        normalize: true,
-        fillParent: true,
+        cursorColor: '#000',
         cursorWidth: 1,
+        fillParent: true,
+        height: 201,
         mediaControls: true,
-        cursorColor: '#000'
+        mediaType: 'audio',
+        minPxPerSec: 100,
+        normalize: true,
+        progressColor: 'rgba(0,0,0,0)',
+        responsive: true,
+        waveColor: '#0C7AC0',
       });
 
       this.wave.on('audioprocess',  this.updateTimeStamp);
@@ -95,6 +96,7 @@ export default {
     loadFile($event) {
       if ($event.file instanceof File) {
         this.isPlaying = false;
+        this.currentTime = 0.0;
         this.wave.loadBlob($event.file);
       }
     }
@@ -113,6 +115,7 @@ export default {
 
 <style lang="scss">
 @import "~@/scss/colors";
+$radius: 1rem;
 .wave {
   &__container {
     width: 69.4rem;
@@ -120,16 +123,20 @@ export default {
 
   &__wave {
     height: 20.1rem;
-    background-color: rgba(216, 216, 216, 0.3);
+    background-color: $white-background-opacity;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
   }
 
   &__controls {
     display: flex;
     justify-content: space-between;
-    background-color: #d8d8d8;
+    background-color: $white-background;
     height: 5.6rem;
     align-items: center;
     padding: 0 2.4rem;
+    border-bottom-left-radius: $radius;
+    border-bottom-right-radius: $radius;
   }
 
   &__timer {
