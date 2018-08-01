@@ -1,36 +1,37 @@
-import { merge } from 'lodash-es';
+import Directory from './Directory';
 
 /**
  * @typedef FileProcessorOptions
  * @property {RegExp} fileFilter
  * @property {string} nameFilter
  *
+ *
  * @export
  * @class FileProcessor
+ * @property {Directory} directory
+ * @property {RegExp} fileFilter
+ * @property {RegExp} nameFilter
+ * @param {FileList} files
+ * @param {FileProcessorOptions} options
  */
-export class FileProcessor {
-  /**
-   * Creates an instance of FileProcessor.
-   * @param {FileList} files
-   * @param {FileProcessorOptions} options
-   */
+export default class FileProcessor {
   constructor(
     files = null,
     { fileFilter = /.(mp3|ogg)$/, nameFilter = '' } = {}
   ) {
     this.clear();
-    this.generateFileTree(files);
     this.fileFilter = fileFilter;
     this.setNameFilter(nameFilter);
+    this.generateDirectories(files);
   }
 
   /**
-   * Processes a file list and returns a object containing the files in a Object with correct directories
+   * Processes a file list and returns a Directory containing all the files and nested directories to properly simulate the local directory
    * @param {FileList} files
-   * @returns object
+   * @returns Directory
    * @memberof FileProcessor
    */
-  generateFileTree(files) {
+  generateDirectories(files) {
     if (!(files instanceof FileList)) {
       return;
     }
@@ -38,63 +39,23 @@ export class FileProcessor {
     this.clear();
 
     for (let i = 0, l = files.length; i < l; i++) {
-      this.addFileToTree(files[i]);
+      if (
+        this.fileFilter.test(files[i].name) &&
+        this.nameFilter.test(files[i].name)
+      ) {
+        this.directory.addFile(files[i]);
+      }
     }
-    return this.fileTree;
+
+    return this.directory;
   }
 
   /**
-   * Adds the file to the file tree for easier navigation
-   * @param {File} file
-   * @memberof FileProcessor
-   * @returns object
-   */
-  addFileToTree(file) {
-    const filePath = file.webkitRelativePath.split('/');
-
-    const fileName = filePath.pop();
-
-    if (!this.fileFilter.test(fileName) || !this.nameFilter.test(fileName)) {
-      return;
-    }
-
-    this.fileCount++;
-
-    const fileTree = this.generateObject(filePath, file);
-
-    merge(this.fileTree, fileTree);
-
-    return this.fileTree;
-  }
-
-  /**
-   * Generates the file structure object based on the provided array of strings and file name
-   * @param {string[]} list
-   * @param {File} file
-   * @param {object} [obj={}]
-   * @returns object
-   * @memberof FileProcessor
-   */
-  generateObject(list, file, obj = {}) {
-    const name = list.pop();
-    if ('undefined' === typeof name) {
-      obj[file.name] = file;
-      return obj;
-    }
-
-    obj[name] = {};
-
-    this.generateObject(list, file, obj[name]);
-    return obj;
-  }
-
-  /**
-   * Clears the current file tree
+   * Clears the current Directory instance
    * @memberof FileProcessor
    */
   clear() {
-    this.fileTree = {};
-    this.fileCount = 0;
+    this.directory = new Directory();
   }
 
   /**

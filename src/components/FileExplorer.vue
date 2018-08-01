@@ -3,7 +3,7 @@
     <v-text-field class="explorer__search" @input="filter" prepend-inner-icon="search" placeholder="Search file names" solo />
     <h3 class="font-28 font-semi-bold explorer__header">Files</h3>
     <div class="explorer__dir">
-      <file-directory v-for="(value, key) in fileTree" :key="key" v-if="hasFiles" @click="fileSelected" :input="value" :name="key" :selected="selected" />
+      <file-directory v-if="hasFiles" v-for="(value, key) in directory.dir" :key="key" :directory="value" :name="key" :active="active" />
     </div>
     <div color="accent" class="v-btn accent explorer__input font-semi-bold font-16">
       <span>Import Files</span>
@@ -13,8 +13,10 @@
 </template>
 
 <script>
-import { FileProcessor } from '@/class/FileProcessor';
-import  FileDirectory  from '@/components/FileDirectory';
+import Directory from '@/class/Directory';
+import FileProcessor from '@/class/FileProcessor';
+import FileDirectory from '@/components/FileDirectory';
+import { EventBus } from '@/class/EventBus';
 export default {
   components: {
     FileDirectory
@@ -22,32 +24,36 @@ export default {
   data() {
     return {
       factory: new FileProcessor(),
-      fileTree: {},
-      fileList: null,
+      directory: new Directory(),
       hasFiles: false,
-      selected: null
-
+      rawFiles: null,
+      active: null,
     };
   },
   methods: {
     filter($event) {
       this.factory.setNameFilter($event);
-      this.fileTree = this.factory.generateFileTree(this.fileList);
+      this.directory = this.factory.generateDirectories(this.rawFiles);
     },
     loadFiles($event) {
       if (!$event.target.files.length) {
         return;
       }
-
-
       this.hasFiles = true;
-      this.fileList = $event.target.files;
-      this.fileTree = this.factory.generateFileTree($event.target.files);
+      this.rawFiles = $event.target.files;
+      this.directory = this.factory.generateDirectories(this.rawFiles);
     },
-    fileSelected($file) {
-
-      this.selected = $file;
+    setActive($event) {
+      if (null !== $event.file) {
+        this.active = $event.file;
+      }
     }
+  },
+  mounted() {
+    EventBus.$on('file_selected', this.setActive);
+  },
+  destroyed() {
+    EventBus.$off('file_selected', this.setActive);
   }
 };
 </script>
@@ -56,6 +62,7 @@ export default {
 @import "~@/scss/colors";
 .explorer {
   width: 28.2rem;
+  min-width: 28.2rem;
   background-color: $white-background;
   padding: 2.4rem 0 0;
   position: relative;

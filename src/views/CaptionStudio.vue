@@ -19,9 +19,7 @@
 
 <script>
 import FileExplorer from '@/components/FileExplorer';
-
 export default {
-
   components: {
     FileExplorer,
   }

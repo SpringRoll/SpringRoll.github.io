@@ -6,24 +6,24 @@
           <v-list-tile-title class="directory__name font-semi-bold font-16"> {{ name }} </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile-content v-for="(value,key) in input" :key="key" v-if="isFile(value)">
-
+      <v-list-tile-content v-for="(value, index) in files" :key="index">
         <label class="directory__file">
-          <v-icon class="directory__icon" :class="{'--active': isSelected(value)}">audiotrack</v-icon>
-          <input :id="`${key}_${value.name}`" class="directory__select" @change="emit" type="radio" name="selectedFile" :value="value" :checked="isSelected(value)" />
-          <label :for="`${key}_${value.name}`" class="font-16 directory__label">{{value.name}}</label>
+          <v-icon class="directory__icon" :class="{'--active': value.active}">audiotrack</v-icon>
+          <input :id="`${index}_${value.file.name}`" class="directory__select" @change="emit" type="radio" name="selectedFile" :value="value.file" :checked="value.active" />
+          <label :for="`${index}_${value.file.name}`" class="font-16 directory__label">{{value.file.name}}</label>
         </label>
       </v-list-tile-content>
-      <file-directory class="directory__nested" v-else @click="$emit('click', $event)" :input="value" :name="key" :sub="true" :selected="selected" />
+      <file-directory v-for="(value, key) in directory.dir" :key="key" class="directory__nested" :directory="value" :name="key" :sub="true" :active="active" />
     </v-list-group>
   </v-list>
 </template>
 
 <script>
+import { EventBus } from '@/class/EventBus';
 export default {
   name: 'file-directory',
   props: {
-    input: {
+    directory: {
       type: Object,
       required: true
     },
@@ -31,22 +31,62 @@ export default {
       type: String,
       default: ''
     },
-    selected: File,
+    active: File,
     sub: {
       type: Boolean,
       default: false
+    }
+  },
+  data() {
+    return {
+      hasActive: false
+    };
+  },
+  computed: {
+    files() {
+      return this.directory.files.map(file => {
+        return {
+          active: this.active === file,
+          file
+        };
+      });
+    },
+  },
+  watch: {
+    directory() {
+      if (this.hasActive) {
+        this.directory.selectByFile(this.active);
+      }
     }
   },
   methods: {
     isFile(file) {
       return file instanceof File;
     },
-    isSelected(file) {
-      return this.isFile(this.selected) && this.isFile(file) && file.webkitRelativePath === this.selected.webkitRelativePath;
+    nextFile() {
+      if (this.hasActive) {
+        EventBus.$emit('file_selected', {file: this.directory.nextFile()});
+      }
+    },
+    previousFile() {
+      if (this.hasActive) {
+        EventBus.$emit('file_selected', {file: this.directory.previousFile()});
+      }
     },
     emit($event) {
-      this.$emit('click', $event.target._value);
+      this.hasActive = $event.target.checked;
+      if (this.hasActive) {
+        EventBus.$emit('file_selected', {file:  this.directory.selectByFile($event.target._value) });
+      }
     }
+  },
+  mounted() {
+    EventBus.$on('next_file', this.nextFile);
+    EventBus.$on('previous_file',this.previousFile);
+  },
+  destroyed() {
+    EventBus.$off('next_file', this.nextFile);
+    EventBus.$off('previous_file',this.previousFile);
   }
 };
 </script>
