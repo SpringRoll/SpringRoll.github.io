@@ -17,7 +17,7 @@ import Directory from './Directory';
 export default class FileProcessor {
   constructor(
     files = null,
-    { fileFilter = /.(mp3|ogg)$/, nameFilter = '' } = {}
+    { fileFilter = /audio\/(mp3|ogg)$/, nameFilter = '' } = {}
   ) {
     this.clear();
     this.fileFilter = fileFilter;
@@ -40,7 +40,7 @@ export default class FileProcessor {
 
     for (let i = 0, l = files.length; i < l; i++) {
       if (
-        this.fileFilter.test(files[i].name) &&
+        this.fileFilter.test(files[i].type) &&
         this.nameFilter.test(files[i].name)
       ) {
         this.directory.addFile(files[i]);
@@ -65,7 +65,7 @@ export default class FileProcessor {
    */
   setNameFilter(name) {
     if (!name.length) {
-      this.nameFilter = /.*/g;
+      this.nameFilter = /^/g;
       return;
     }
     this.nameFilter = new RegExp(`(${name})`, 'g');
