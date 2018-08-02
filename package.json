@@ -10,10 +10,12 @@
   "dependencies": {
     "bellhop-iframe": "^2.1.1",
     "lodash-es": "^4.17.10",
+    "quill": "^1.3.6",
     "springroll-container": "^1.1.2",
     "vue": "^2.5.16",
     "vue-audio-visual": "^1.2.0",
     "vue-highlightjs": "^1.3.3",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1",
     "vuetify": "^1.1.8",
     "wavesurfer.js": "^2.0.6"

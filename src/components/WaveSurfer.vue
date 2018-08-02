@@ -115,7 +115,8 @@ export default {
 
 <style lang="scss">
 @import "~@/scss/colors";
-$radius: 1rem;
+@import "~@/scss/sizes";
+
 .wave {
   &__container {
     width: 69.4rem;
@@ -124,8 +125,8 @@ $radius: 1rem;
   &__wave {
     height: 20.1rem;
     background-color: $white-background-opacity;
-    border-top-left-radius: $radius;
-    border-top-right-radius: $radius;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
   }
 
   &__controls {
@@ -135,8 +136,8 @@ $radius: 1rem;
     height: 5.6rem;
     align-items: center;
     padding: 0 2.4rem;
-    border-bottom-left-radius: $radius;
-    border-bottom-right-radius: $radius;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 
   &__timer {

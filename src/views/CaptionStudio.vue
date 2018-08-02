@@ -4,9 +4,8 @@
     <div class="caption__container">
       <WaveSurfer />
       <div>TODO: TEXT PREVIEW</div>
-      <div>TODO: TEXT EDTIOR
-        <div>TODO: Start time and end time</div>
-      </div>
+      <TextEditor/>
+      <div>TODO: Start time and end time</div>
 
       <div>
         TODO: Code Preview
@@ -20,16 +19,13 @@
 <script>
 import FileExplorer from '@/components/FileExplorer';
 import WaveSurfer from '@/components/WaveSurfer';
+import TextEditor from '@/components/TextEditor';
 
 export default {
-  data() {
-    return {
-      file: null
-    };
-  },
   components: {
     FileExplorer,
-    WaveSurfer
+    WaveSurfer,
+    TextEditor
   }
 };
 </script>
