@@ -43,6 +43,7 @@ export default {
       this.rawFiles = $event.target.files;
       this.directory = this.factory.generateDirectories(this.rawFiles);
     },
+
     setActive($event) {
       if (null !== $event.file) {
         this.active = $event.file;
