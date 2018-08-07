@@ -67,7 +67,7 @@ export default {
   background-color: $white-background;
   padding: 2.4rem 0 0;
   position: fixed;
-  height: calc(100vh - 3.7rem);
+  height: calc(100vh - 5.7rem);
   display: flex;
   flex-direction: column;
   align-items: center;

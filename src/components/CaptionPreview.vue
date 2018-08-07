@@ -11,32 +11,15 @@
 
 <script>
 import { CaptionPlayer, CaptionFactory } from 'springroll';
+import { EventBus } from '@/class/EventBus';
 export default {
   data() {
     return {
-      captionPlayer: null,
+      captionPlayer: new CaptionPlayer(null, {
+        lineBegin: this.nextLine,
+        lineEnd: this.clear,
+      }),
       captions: '',
-      captionData: {
-        'welcome':[
-          {
-            'content': 'This is the first line',
-            'start':0,
-            'end': 1200
-          },
-          {
-            'content': 'This is the second line',
-            'start':1300,
-            'end': 2400
-          }
-        ],
-        'other':[
-          {
-            'content': 'this caption only has on line',
-            'start':0,
-            'end': 3000
-          }
-        ]
-      }
     };
   },
   methods: {
@@ -45,18 +28,18 @@ export default {
     },
     clear() {
       this.captions = '';
+    },
+    setCaptions($event) {
+      this.captionPlayer.captions = CaptionFactory.createCaptionMap($event.captions);
+      this.captionPlayer.start($event.name);
     }
   },
   mounted() {
-    const captionMap = CaptionFactory.createCaptionMap(this.captionData);
-    this.captionPlayer = new CaptionPlayer(CaptionFactory.createCaptionMap(this.captionData), {
-      lineBegin: this.nextLine,
-      lineEnd: this.clear,
-    });
-
-    this.captionPlayer.start('welcome', 0);
+    EventBus.$on('json_updated', this.setCaptions);
+  },
+  destroyed() {
+    EventBus.$off('json_updated', this.setCaptions);
   }
-
 };
 </script>
 
@@ -80,6 +63,7 @@ export default {
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
     height: 14.5rem;
+    padding: 1rem;
   }
 }
 </style>

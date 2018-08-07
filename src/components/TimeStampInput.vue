@@ -1,7 +1,7 @@
 <template>
 <div class="time-stamp-input">
   <div class="time-stamp-input__container">
-    <span>{{name}} Time:</span>
+    <span> <span class="time-stamp-input__name">{{name}}</span> Time:</span>
     <div class="time-stamp">
       <input class="time-stamp-input__input" v-model="minute" type="number" @blur="blur" min="0" max="59" step="1"/>
       :
@@ -20,17 +20,25 @@ import { EventBus } from '@/class/EventBus';
 export default {
   mixins: [TimeStampMixin],
   props: {
-    name: String
+    name: String,
+    default: Number
+  },
+  watch: {
+    default() {
+      this.updateTime(this.default || 0);
+    }
   },
   methods: {
     blur() {
       this.calculateTime();
+      this.$emit('time', this.time);
     },
     getTime() {
       EventBus.$once('time_current', this.updateTime);
       EventBus.$emit('time_get');
+      this.$emit('time', this.time);
     }
-  }
+  },
 };
 </script>
 <style lang="scss">
@@ -52,6 +60,10 @@ export default {
         -moz-appearance: number-input;
       }
     }
+  }
+
+  &__name {
+    text-transform: capitalize;
   }
 
   &__button {

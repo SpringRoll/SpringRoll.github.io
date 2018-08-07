@@ -133,6 +133,10 @@ export default {
     background-color: $white-background-opacity;
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
+
+    wave {
+      z-index: 0;
+    }
   }
 
   &__controls {
