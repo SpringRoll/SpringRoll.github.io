@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ScaleManager } from 'springroll-2';
+import { ScaleManager } from 'springroll';
 import Example from '@/components/Example';
 export default {
   components: {
@@ -73,11 +73,6 @@ export default {
 
   &__blurb {
     margin-top: 1.8rem;
-  }
-
-  .code-block {
-    margin-top: 1.8rem;
-    height: 15rem;
   }
 }
 </style>

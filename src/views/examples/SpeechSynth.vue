@@ -24,7 +24,7 @@
 
 
 <script>
-import { SpeechSynth } from 'springroll-2';
+import { SpeechSynth } from 'springroll';
 import Example from '@/components/Example';
 
 export default {

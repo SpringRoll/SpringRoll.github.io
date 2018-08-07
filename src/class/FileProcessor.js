@@ -17,7 +17,7 @@ import Directory from './Directory';
 export default class FileProcessor {
   constructor(
     files = null,
-    { fileFilter = /audio\/(mp3|ogg)$/, nameFilter = '' } = {}
+    { fileFilter = /(audio|video)\/(mp3|ogg|mpeg)$/, nameFilter = '' } = {}
   ) {
     this.clear();
     this.fileFilter = fileFilter;

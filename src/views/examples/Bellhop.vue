@@ -20,7 +20,7 @@ const container =  new springroll.Container('#iframe', {
 });
 
 //iframe
-import { Application } from 'springroll-2';
+import { Application } from 'springroll';
 
 const app = new Application({
   captions: true,

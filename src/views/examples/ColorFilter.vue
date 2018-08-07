@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { ColorFilter } from 'springroll-2';
+import { ColorFilter } from 'springroll';
 import Example from '@/components/Example';
 export default {
   components: {

@@ -1,18 +1,23 @@
 <template>
-  <quill-editor v-model="content" class="editor" :editorToolbar="toolbarOptions" />
+  <div class="editor">
+    <quill-editor v-model="content" class="editor"/>
+    <div class="editor__controls">
+      <TimeStampInput name="Start"/>
+      <TimeStampInput name="End"/>
+    </div>
+  </div>
 </template>
 
 <script>
+import TimeStampInput from './TimeStampInput';
+// import { EventBus } from '@/class/EventBus';
 export default {
+  components: {
+    TimeStampInput
+  },
   data() {
     return {
-      content: '',
-      toolbarOptions: [
-        [{ 'font': [] }],
-        [{ 'size':[] }],
-        ['bold', 'italic', 'underline'],
-        [{ 'color': [] }],
-      ]
+      content: ''
     };
   },
   watch:{
@@ -26,8 +31,22 @@ export default {
 <style lang="scss">
 @import "~@/scss/colors";
 @import "~@/scss/fonts";
+@import "~@/scss/sizes";
 .editor {
-  width: 69.4rem;
+  width: 100%;
+  &__button {
+    width: 25.2rem;
+    height: 3.6rem;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    background-color: $grey;
+    padding: 1rem;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
 }
 </style>
 
