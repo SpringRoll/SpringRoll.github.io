@@ -25,7 +25,7 @@
 
       </div>
     </div>
-    <pre slot="code" v-highlightjs="currentExample"><code class="javascript code-block"></code></pre>
+    <CodeBlock slot="code" :code=currentExample />
 
   </Example>
 </template>
@@ -33,9 +33,11 @@
 <script>
 import { Controller } from 'springroll-2';
 import Example from '@/components/Example';
+import CodeBlock from '@/components/CodeBlock';
 export default {
   components: {
-    Example
+    Example,
+    CodeBlock
   },
   data() {
     const listeners = [

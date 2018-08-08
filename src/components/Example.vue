@@ -1,6 +1,6 @@
 <template>
   <div class="example__component">
-    <h2 class="font-28 font-semi-bold">{{title}}</h2>
+    <h2 class="font-28 font-semi-bold example__title">{{title}}</h2>
     <div class="example__slots">
       <div class="example__column" :class="{'--large': large}">
         <slot name="example"></slot>
@@ -24,7 +24,7 @@ export default {
   &__column {
     display: flex;
     flex-direction: column;
-    height: 26.4rem;
+    min-height: 26.4rem;
     margin-right: 10.9rem;
     width: 37.8rem;
 
@@ -37,6 +37,10 @@ export default {
         padding-top: 12rem;
       }
     }
+  }
+
+  &__title {
+    margin-bottom: 3.2rem;
   }
 
   &__slots {

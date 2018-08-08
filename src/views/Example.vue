@@ -73,7 +73,7 @@ export default {
     color: $accent;
     margin-right: 0.75rem;
     text-decoration: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.2rem 0.7rem;
 
     // @media screen and (max-width: 768px) {
     //   margin-bottom: 4rem;
