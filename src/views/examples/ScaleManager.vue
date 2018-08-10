@@ -1,6 +1,6 @@
 <template>
   <Example title="Window Dimensions">
-    <div slot="example" class="scale__column code-example">
+    <div slot="example" class="scale__column">
       <span class="font-16 font scale__blurb">Try resizing the window</span>
       <div class="scale__properties">
         <h3 class="font-21 font-semi-bold scale__property">Width: {{size.width}} </h3>
@@ -8,16 +8,18 @@
         <h3 class="font-21 font-semi-bold scale__property">Scale: {{size.ratio}}</h3>
       </div>
     </div>
-    <pre slot="code" v-highlightjs="currentExample"><code class="javascript code-block"></code></pre>
+    <CodeBlock slot="code" :code=currentExample />
   </Example>
 </template>
 
 <script>
 import { ScaleManager } from 'springroll-2';
 import Example from '@/components/Example';
+import CodeBlock from '@/components/CodeBlock';
 export default {
   components: {
-    Example
+    Example,
+    CodeBlock
   },
   data() {
     return {

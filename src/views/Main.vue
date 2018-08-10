@@ -2,7 +2,7 @@
   <div class="main">
     <img class="main__logo" src="@/assets/logo.png" alt="SpringRoll Logo">
     <h1 class="main__title">SpringRoll</h1>
-    <div class="main__about">
+    <div class="main__about font-31">
       Keytar McSweeney's Williamsburg, readymade leggings try-hard 90's street art letterpress hoodie occupy Wes Anderson Banksy. Asymmetrical viral letterpress, McSweeney's seitan 3 wolf moon drinking vinegar sartorial pour-over messenger bag photo booth umami next level craft beer.
     </div>
     <!-- <Game/> -->
@@ -64,12 +64,10 @@
   }
 
   &__about {
-    @extend .font-21;
     @extend .font-light;
     color: $secondary;
-    height: 15rem;
     margin-top: 5.3rem;
-    max-width: 66rem;
+    max-width: 96rem;
 
     text-align: center;
   }
