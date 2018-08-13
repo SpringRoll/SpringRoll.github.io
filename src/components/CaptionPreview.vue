@@ -3,39 +3,31 @@
     <div class="captions__toolbar">
 
     </div>
-    <div class="captions__content">
-      {{this.captions}}
-    </div>
+    <div id="this-is-test" class="captions__content"></div>
   </div>
 </template>
 
 <script>
-import { CaptionPlayer, CaptionFactory } from 'springroll';
+import { CaptionPlayer, CaptionFactory, HtmlRenderer } from 'springroll';
 import { EventBus } from '@/class/EventBus';
 export default {
   data() {
     return {
-      captionPlayer: new CaptionPlayer(null, {
-        lineBegin: this.nextLine,
-        lineEnd: this.clear,
-      }),
-      captions: '',
+      captionPlayer: null
     };
   },
   methods: {
-    nextLine(line) {
-      this.captions = line.content;
-    },
-    clear() {
-      this.captions = '';
-    },
     setCaptions($event) {
       this.captionPlayer.captions = CaptionFactory.createCaptionMap($event.captions);
       this.captionPlayer.start($event.name);
+    },
+    setup() {
+      this.captionPlayer = new CaptionPlayer([], new HtmlRenderer(document.getElementById('this-is-test')));
     }
   },
   mounted() {
     EventBus.$on('json_updated', this.setCaptions);
+    this.setup();
   },
   destroyed() {
     EventBus.$off('json_updated', this.setCaptions);
@@ -48,7 +40,6 @@ export default {
 @import "~@/scss/sizes";
 .captions {
   height: 20rem;
-  // margin-bottom: 5rem;
   width: 100%;
 
   &__toolbar {

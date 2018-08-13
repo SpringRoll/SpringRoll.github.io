@@ -48,30 +48,32 @@ export default {
     },
     changeCaptionFile($event) {
       const name = $event.file.name.replace(/.(ogg|mp3|mpeg)$/, '').trim();
-      // console.log(this.captions);
-      // console.log(this.active.getData());
 
-      if (0 === name.length || name === this.active.name) {
+      if (!name.length || name === this.active.name) {
         return;
       }
 
       this.put();
 
-      if ('undefined' === typeof this.captions[name]) {
-        this.active = new Caption(name);
-      } else {
-        this.active = new Caption(name, this.captions[name][0]);
-      }
+      this.active = 'undefined' !== typeof this.captions[name]
+        ? new Caption(name, this.captions[name][0])
+        : new Caption(name);
 
-      const {end, start, styledContent} = this.active;
+      const {end, start, content} = this.active;
 
-      this.content = styledContent;
+      this.content = content;
       this.end = end;
       this.start = start;
     },
     put() {
-      if ('' !== this.active.name) {
+      if (this.active.name.length) {
         this.captions[this.active.name] = this.active.getData();
+
+        //NOTE: Currently we are only using one index in the array, but if/when we update a caption to have multiple indexs this will have to change
+        if (this.captions[this.active.name][0].content.length < 1) {
+          this.captions[this.active.name][0].content = ' ';
+        }
+
         EventBus.$emit('json_updated', { name:this.active.name, captions: this.captions});
       }
     }

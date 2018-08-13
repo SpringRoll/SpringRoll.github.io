@@ -2,7 +2,6 @@
  * Object that represents a single files caption
  *
  * @export
- * @property {html} styledContent caption text as html to allow for styling
  * @property {number} end caption end time
  * @property {number} start caption start time
  * @property {string} content caption text as a string
@@ -20,20 +19,19 @@ export class Caption {
   }
 
   getData() {
-    const { content, styledContent, start, end } = this;
+    const { content, start, end } = this;
 
     return [
       {
         content,
         end,
-        start,
-        styledContent
+        start
       }
     ];
   }
   updateContent({
     name = this.name,
-    content = this.content || '',
+    content = this.content || ' ',
     end = this.end || 0,
     start = this.start || 0
   } = {}) {
@@ -41,15 +39,8 @@ export class Caption {
     this.name = name;
     this.start = start;
 
-    this.content = this.sanitize(content);
-    this.styledContent = content;
+    this.content = content;
 
     return this.getData();
-  }
-
-  sanitize(html) {
-    const element = document.createElement('div');
-    element.innerHTML = html;
-    return element.textContent || element.innerText || '';
   }
 }

@@ -24,7 +24,7 @@ Vue.use(VueQuillEditor, {
     toolbar: [
       [{ font: [] }],
       [{ size: ['14px', '16px', '18px', '21px'] }],
-      ['bold', 'italic', 'underline', { color: [] }]
+      ['bold', { color: [] }]
     ]
   },
   formats: {
