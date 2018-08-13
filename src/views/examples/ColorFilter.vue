@@ -1,5 +1,5 @@
 <template>
-  <Example title="Filter Example">
+  <Example title="Filter Example" :large="true">
     <div slot="example">
       <img class="filter__image" ref="image" src="@/assets/example.png" alt="Example Image">
       <label class="filter__label">Color Filter</label>
@@ -65,7 +65,6 @@ export default {
   }
 
   &__image {
-    height: 20.6rem;
     width: 100%;
     min-width: 36.6rem;
     margin-bottom: 1.1rem;

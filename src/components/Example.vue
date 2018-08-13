@@ -2,7 +2,7 @@
   <div class="example__component">
     <h2 class="font-28 font-semi-bold">{{title}}</h2>
     <div class="example__slots">
-      <div class="example__column">
+      <div class="example__column" :class="{'--large': large}">
         <slot name="example"></slot>
       </div>
       <div class="example__column --row">
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  props: ['title']
+  props: ['title', 'large']
 };
 </script>
 
@@ -27,6 +27,10 @@ export default {
     height: 26.4rem;
     margin-right: 10.9rem;
     width: 37.8rem;
+
+    &.--large {
+      width: 50%;
+    }
 
     @media screen and (max-width: 768px) {
       &.--row {
