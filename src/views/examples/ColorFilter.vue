@@ -2,19 +2,21 @@
   <Example title="Filter Example" :large="true">
     <div slot="example">
       <img class="filter__image" ref="image" src="@/assets/example.png" alt="Example Image">
-      <label class="filter__label">Color Filter</label>
+      <label class="filter__label font-12">Color Filter</label>
       <v-select class="filter__select" v-model="selected" item-text="name" :items="types" @input="changeFilter($event)" />
     </div>
-    <pre slot="code" v-highlightjs="currentExample"><code class="javascript code-block"></code></pre>
+    <CodeBlock class="filter__code" slot="code" :code=currentExample />
   </Example>
 </template>
 
 <script>
 import { ColorFilter } from 'springroll';
 import Example from '@/components/Example';
+import CodeBlock from '@/components/CodeBlock';
 export default {
   components: {
-    Example
+    Example,
+    CodeBlock
   },
   data() {
     const filter = new ColorFilter();
@@ -68,6 +70,10 @@ export default {
     width: 100%;
     min-width: 36.6rem;
     margin-bottom: 1.1rem;
+  }
+
+  &__code {
+    height: 97%;
   }
 }
 </style>

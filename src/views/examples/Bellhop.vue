@@ -10,8 +10,7 @@
         <v-btn id="sound">Toggle Mute</v-btn>
       </div>
     </div>
-    <div slot="code">
-      <pre slot="code" v-highlightjs="`
+    <CodeBlock slot="code" code="`
 //Main
 const container =  new springroll.Container('#iframe', {
   pauseButton: ['#pause'],
@@ -39,19 +38,20 @@ function updateElem(elem, data) {
   document.getElementById(elem).innerText = data;
 }
 
-window.app = app;`"><code class="javascript code-block"></code></pre>
-    </div>
+window.app = app;`"/>
   </Example>
 </template>
 
 <script>
 import Iframe from '@/mixins/Iframe';
 import Example from '@/components/Example';
+import CodeBlock from '@/components/CodeBlock';
 
 export default {
   mixins: [Iframe],
   components: {
-    Example
+    Example,
+    CodeBlock
   },
   mounted() {
 

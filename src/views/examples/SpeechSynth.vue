@@ -1,7 +1,7 @@
 <template>
   <Example title="Modifers">
     <div slot="example">
-      <label class="synth__label font-12 font">Volume</label>
+      <label class="synth__label font-12 font">What to Say</label>
       <v-text-field class="synth__input --text font-16" @input="updateCurrentExample()" v-model="message" />
       <label class="synth__label font-12 font">Volume</label>
       <v-slider class="synth__input" color="accent" thumb-label v-model="volume" :ticks="true" min="0" max="1" step="0.1" @input="onVolume()" />
@@ -13,9 +13,9 @@
       <v-slider class="synth__input" color="accent" thumb-label v-model="voice" :ticks="true" min="0" :max="totalVoices" @input="onVoice()" step="1" :disabled="1 > totalVoices" />
     </div>
 
-    <div slot="code">
+    <div class="synth__container" slot="code">
       <v-btn @click="say()" class="synth__speak" color="accent" :disabled="1 > message.length">Speak</v-btn>
-      <pre v-highlightjs="currentExample"><code class="javascript code-block"></code></pre>
+      <CodeBlock :code=currentExample />
     </div>
   </Example>
 
@@ -26,10 +26,12 @@
 <script>
 import { SpeechSynth } from 'springroll';
 import Example from '@/components/Example';
+import CodeBlock from '@/components/CodeBlock';
 
 export default {
   components: {
-    Example
+    Example,
+    CodeBlock
   },
   data() {
     const speaker = new SpeechSynth();
@@ -96,7 +98,6 @@ export default {
 <style lang="scss">
 @import "~@/scss/fonts";
 @import "~@/scss/colors";
-@import "~@/scss/code";
 .synth {
   &__label {
     opacity: 0.54;
@@ -111,9 +112,14 @@ export default {
     }
   }
 
+  &__container {
+    height: 78%;
+  }
+
   &__speak {
     width: 100%;
     margin: 0 0 1.5rem !important;
+    text-transform: capitalize !important;
   }
 }
 </style>
