@@ -51,6 +51,10 @@ export default {
   display: flex;
   flex-direction: column;
 
+  .code-block {
+    width: 100%;
+  }
+
   pre,
   code {
     overflow: auto;
