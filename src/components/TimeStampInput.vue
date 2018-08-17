@@ -1,16 +1,16 @@
 <template>
 <div class="time-stamp-input">
+  <span class="time-stamp-input__label capitalize font-semi-bold font-16">{{name}} Time:</span>
   <div class="time-stamp-input__container">
-    <span> <span class="time-stamp-input__name">{{name}}</span> Time:</span>
-    <div class="time-stamp">
+    <div class="time-stamp-input__input-group font-21">
       <input class="time-stamp-input__input" v-model="minute" type="number" @blur=blur min="0" max="59" step="1"/>
       :
       <input class="time-stamp-input__input"  v-model="second" type="number" @blur=blur min="0" max="59" step="1"/>
       :
       <input class="time-stamp-input__input" v-model="mili" type="number" @blur=blur min="0" max="99" step="1"/>
     </div>
+    <v-btn  flat @click="getTime" class="time-stamp-input__button font-16 font-semi-bold capitalize">Use Current Time</v-btn>
   </div>
-    <v-btn :block=true flat @click="getTime" class="font-16 font-semi-bold capitalize">Use Current Time</v-btn>
 </div>
 </template>
 
@@ -42,10 +42,30 @@ export default {
 };
 </script>
 <style lang="scss">
+@import "~@/scss/colors";
 .time-stamp-input {
+  $input-width: 15.3rem;
+
+  display: flex;
   width: 25.2rem;
 
+  &__label {
+    color: $secondary;
+    white-space: nowrap;
+    padding-top: 1.5rem;
+  }
+
   &__input {
+    &-group {
+      background-color: $white;
+      color: $secondary;
+      height: 3.6rem;
+      justify-content: center;
+      width: $input-width;
+      text-align: center;
+      padding: 0.5rem;
+    }
+
     &[type="number"] {
       width: 2rem;
       &::-webkit-outer-spin-button,
@@ -62,16 +82,17 @@ export default {
     }
   }
 
-  &__name {
-    text-transform: capitalize;
+  &__button {
+    color: $accent !important;
   }
 
   &__container {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
     align-items: center;
+    display: flex;
+    justify-content: space-between;
     margin: 1rem 0 1.8rem;
+    width: 100%;
+    flex-direction: column;
   }
 }
 </style>

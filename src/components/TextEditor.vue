@@ -5,7 +5,7 @@
       <TimeStampInput @time=startTimeUpdated :default=active.start name="start"/>
       <TimeStampInput @time=endTimeUpdated :default=active.end name="end"/>
     </div>
-    <v-btn :block=true color="accent" class="font-16 font-semi-bold capitalize">{{true ? 'Add Caption' : 'Remove Caption'}}</v-btn>
+    <v-btn :block=true color="accent" class="editor__button font-16 font-semi-bold capitalize">{{0 === captionIndex ? 'Add Caption' : 'Remove Caption'}}</v-btn>
   </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
       content: '',
       start: 0,
       end: 0,
-      active: new Caption('')
+      active: new Caption(''),
+      captionIndex: 0
     };
   },
   watch:{
@@ -77,6 +78,9 @@ export default {
 
         EventBus.$emit('json_updated', { name:this.active.name, captions: this.captions});
       }
+    },
+    hasActive() {
+      return 'undefined' !== typeof this.captions[this.active.name];
     }
   },
 
@@ -99,7 +103,7 @@ export default {
 
   border-bottom-left-radius: $border-radius;
   border-bottom-right-radius: $border-radius;
-  height: $quill + $controls + 5rem;
+  height: $quill + $controls + 3.6rem;
   overflow: hidden;
   width: 100%;
 
@@ -114,6 +118,11 @@ export default {
     justify-content: space-between;
     padding: 1rem;
   }
+
+  &__button {
+    &.v-btn {
+      margin: 0;
+    }
+  }
 }
 </style>
-
