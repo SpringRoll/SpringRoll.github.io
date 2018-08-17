@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { Controller } from 'springroll-2';
+import { Controller } from 'springroll';
 import Example from '@/components/Example';
 import CodeBlock from '@/components/CodeBlock';
 export default {

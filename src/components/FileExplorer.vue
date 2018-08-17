@@ -66,20 +66,19 @@ export default {
   min-width: 28.2rem;
   background-color: $white-background;
   padding: 2.4rem 0 0;
-  position: relative;
-  height: calc(100vh - 6.6rem);
+  position: fixed;
+  height: calc(100vh - 5.7rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  resize: horizontal;
 
   &__input {
     width: 24.2rem;
     height: 3.6rem;
     text-transform: capitalize;
     position: relative;
-    margin-top: 1.5rem !important;
+    margin: 3rem 0 !important;
     flex: end;
   }
 

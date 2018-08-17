@@ -46,7 +46,6 @@ export default class Directory {
 
       currentDir = dir;
     }
-
     currentDir.files.push(file);
     currentDir.sortFilesAlphabetically();
   }

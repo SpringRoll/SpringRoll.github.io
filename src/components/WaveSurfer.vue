@@ -3,24 +3,24 @@
     <div id="wave__container" class="wave__wave"></div>
     <div class="wave__controls">
       <div class="wave__buttons">
-        <v-btn @click="rewind" class="wave__button" icon small>
+        <v-btn @click="rewind" :disabled="!hasFile" class="wave__button" icon small>
           <v-icon>fast_rewind</v-icon>
         </v-btn>
-        <v-btn @click="previous" class="wave__button" icon small>
+        <v-btn @click="previous" :disabled="!hasFile" class="wave__button" icon small>
           <v-icon>skip_previous</v-icon>
         </v-btn>
-        <v-btn @click="play" class="wave__button" icon small>
+        <v-btn @click="play" :disabled="!hasFile" class="wave__button" icon small>
           <v-icon> {{ isPlaying ? 'pause' : 'play_arrow' }}</v-icon>
         </v-btn>
-        <v-btn @click="next" class="wave__button" icon small>
+        <v-btn @click="next" :disabled="!hasFile" class="wave__button" icon small>
           <v-icon>skip_next</v-icon>
         </v-btn>
-        <v-btn @click="forward" class="wave__button" icon small>
+        <v-btn @click="forward" :disabled="!hasFile" class="wave__button" icon small>
           <v-icon>fast_forward</v-icon>
         </v-btn>
       </div>
       <div class="wave__timer">
-        <span class="font-21">{{timeStamp}}</span>
+        <TimeStamp :input="currentTime"/>
       </div>
     </div>
   </div>
@@ -28,14 +28,19 @@
 
 
 <script>
-import WaveSurfer from 'wavesurfer.js';
 import { EventBus } from '@/class/EventBus';
+import TimeStamp from './TimeStamp';
+import WaveSurfer from 'wavesurfer.js';
 
 export default {
+  components: {
+    TimeStamp
+  },
   data() {
     return {
       wave: null,
       isPlaying: false,
+      hasFile: false,
       currentTime: 0.0
     };
   },
@@ -51,7 +56,7 @@ export default {
   methods: {
     updateTimeStamp() {
       this.currentTime = this.wave.getCurrentTime();
-      this.$emit('time', this.currentTime);
+      // this.$emit('time', this.currentTime);
     },
     initWave() {
       this.wave = WaveSurfer.create({
@@ -96,6 +101,7 @@ export default {
     loadFile($event) {
       if ($event.file instanceof File) {
         this.isPlaying = false;
+        this.hasFile = true;
         this.currentTime = 0.0;
         this.wave.loadBlob($event.file);
       }
@@ -115,17 +121,22 @@ export default {
 
 <style lang="scss">
 @import "~@/scss/colors";
-$radius: 1rem;
+@import "~@/scss/sizes";
+
 .wave {
   &__container {
-    width: 69.4rem;
+    width: 100%;
   }
 
   &__wave {
     height: 20.1rem;
     background-color: $white-background-opacity;
-    border-top-left-radius: $radius;
-    border-top-right-radius: $radius;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+
+    wave {
+      z-index: 0;
+    }
   }
 
   &__controls {
@@ -135,18 +146,8 @@ $radius: 1rem;
     height: 5.6rem;
     align-items: center;
     padding: 0 2.4rem;
-    border-bottom-left-radius: $radius;
-    border-bottom-right-radius: $radius;
-  }
-
-  &__timer {
-    height: 3.6rem;
-    width: 15.3rem;
-    background-color: $white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: $secondary;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 }
 </style>
