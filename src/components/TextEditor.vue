@@ -1,10 +1,11 @@
 <template>
   <div class="editor">
-    <quill-editor v-model=content class="editor"/>
+    <quill-editor v-model=content class="editor__quill"/>
     <div class="editor__controls">
       <TimeStampInput @time=startTimeUpdated :default=active.start name="start"/>
       <TimeStampInput @time=endTimeUpdated :default=active.end name="end"/>
     </div>
+    <v-btn :block=true color="accent" class="font-16 font-semi-bold capitalize">{{true ? 'Add Caption' : 'Remove Caption'}}</v-btn>
   </div>
 </template>
 
@@ -93,19 +94,25 @@ export default {
 @import "~@/scss/fonts";
 @import "~@/scss/sizes";
 .editor {
+  $quill: 20rem;
+  $controls: 10.8rem;
+
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  height: $quill + $controls + 5rem;
+  overflow: hidden;
   width: 100%;
-  &__button {
-    width: 25.2rem;
-    height: 3.6rem;
+
+  &__quill {
+    height: $quill;
   }
 
   &__controls {
-    display: flex;
-    justify-content: space-between;
     background-color: $grey;
+    display: flex;
+    height: $controls;
+    justify-content: space-between;
     padding: 1rem;
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
   }
 }
 </style>

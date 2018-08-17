@@ -1,9 +1,11 @@
 <template>
   <div class="captions">
-    <div class="captions__toolbar">
-
+    <div class="captions__toolbar"/>
+    <div class="captions__content"/>
+    <div class="captions__navigation">
+      <v-btn color="accent" class="font-semi-bold font-16 capitalize" :block=true>Previous</v-btn>
+      <v-btn color="accent" class="font-semi-bold font-16 capitalize" :block=true>Next</v-btn>
     </div>
-    <div id="this-is-test" class="captions__content"></div>
   </div>
 </template>
 
@@ -22,7 +24,7 @@ export default {
       this.captionPlayer.start($event.name);
     },
     setup() {
-      this.captionPlayer = new CaptionPlayer([], new HtmlRenderer(document.getElementById('this-is-test')));
+      this.captionPlayer = new CaptionPlayer([], new HtmlRenderer(document.getElementsByClassName('captions__content')[0]));
     }
   },
   mounted() {
@@ -39,22 +41,39 @@ export default {
 @import "~@/scss/colors";
 @import "~@/scss/sizes";
 .captions {
-  height: 20rem;
+  $toolbar: 5.6rem;
+  $navigation: 3.6rem;
+
+  background-color: $white-background;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  display: flex;
+  flex-direction: column;
+  height: 22.5rem;
+  overflow: hidden;
   width: 100%;
 
   &__toolbar {
-    height: 5.6rem;
     background-color: $grey;
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
+    min-height: $toolbar;
   }
 
   &__content {
-    background-color: $white-background;
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
-    height: 14.5rem;
-    padding: 1rem;
+    height: calc(100% - #{$navigation + $toolbar});
+    padding: 1rem 1rem 0rem;
+  }
+
+  &__navigation {
+    display: flex;
+    min-height: $navigation;
+    width: 100%;
+
+    .v-btn {
+      border-radius: 0;
+      margin: 0 0.09rem;
+    }
   }
 }
 </style>

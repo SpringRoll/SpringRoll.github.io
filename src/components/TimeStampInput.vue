@@ -3,14 +3,14 @@
   <div class="time-stamp-input__container">
     <span> <span class="time-stamp-input__name">{{name}}</span> Time:</span>
     <div class="time-stamp">
-      <input class="time-stamp-input__input" v-model="minute" type="number" @blur="blur" min="0" max="59" step="1"/>
+      <input class="time-stamp-input__input" v-model="minute" type="number" @blur=blur min="0" max="59" step="1"/>
       :
-      <input class="time-stamp-input__input"  v-model="second" type="number" @blur="blur" min="0" max="59" step="1"/>
+      <input class="time-stamp-input__input"  v-model="second" type="number" @blur=blur min="0" max="59" step="1"/>
       :
-      <input class="time-stamp-input__input" v-model="mili" type="number" @blur="blur" min="0" max="99" step="1"/>
+      <input class="time-stamp-input__input" v-model="mili" type="number" @blur=blur min="0" max="99" step="1"/>
     </div>
   </div>
-    <v-btn color="accent" @click="getTime" class="time-stamp-input__button font-16 font-semi-bold --capital">Use Current Time</v-btn>
+    <v-btn :block=true flat @click="getTime" class="font-16 font-semi-bold capitalize">Use Current Time</v-btn>
 </div>
 </template>
 
@@ -64,11 +64,6 @@ export default {
 
   &__name {
     text-transform: capitalize;
-  }
-
-  &__button {
-    width: 100%;
-    margin: 0 !important;
   }
 
   &__container {
