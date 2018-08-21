@@ -3,13 +3,13 @@
   <span class="time-stamp-input__label capitalize font-semi-bold font-16">{{name}} Time:</span>
   <div class="time-stamp-input__container">
     <div class="time-stamp-input__input-group font-21">
-      <input class="time-stamp-input__input" v-model="minute" type="number" @blur=blur min="0" max="59" step="1"/>
+      <input class="time-stamp-input__input" v-model="minutes" type="number" min="0" step="1"/>
       :
-      <input class="time-stamp-input__input"  v-model="second" type="number" @blur=blur min="0" max="59" step="1"/>
+      <input class="time-stamp-input__input"  v-model="seconds" type="number" min="0"  step="1"/>
       :
-      <input class="time-stamp-input__input" v-model="mili" type="number" @blur=blur min="0" max="99" step="1"/>
+      <input class="time-stamp-input__input" v-model="milliseconds" type="number" min="0" step="1"/>
     </div>
-    <v-btn  flat @click="getTime" class="time-stamp-input__button font-16 font-semi-bold capitalize">Use Current Time</v-btn>
+    <v-btn flat @click="getTime" class="time-stamp-input__button font-16 font-semi-bold capitalize">Use Current Time</v-btn>
   </div>
 </div>
 </template>
@@ -19,24 +19,36 @@ import TimeStampMixin from '@/mixins/TimeStamp';
 import { EventBus } from '@/class/EventBus';
 export default {
   mixins: [TimeStampMixin],
+  data() {
+    return {
+      time: 0
+    };
+  },
   props: {
-    name: String,
+    name: {
+      type: String,
+      default: ''
+    },
     default: Number
   },
   watch: {
+    time() {
+      this.$emit('time', this.time);
+    },
     default() {
-      this.updateTime(this.default || 0);
+      this.time = this.default;
     }
   },
+  created() {
+    this.time = 'number' === typeof this.default ? this.default : this.time;
+  },
   methods: {
-    blur() {
-      this.calculateTime();
-      this.$emit('time', this.time);
+    updateTime($event) {
+      this.time = $event.time || 0;
     },
     getTime() {
       EventBus.$once('time_current', this.updateTime);
       EventBus.$emit('time_get');
-      this.$emit('time', this.time);
     }
   },
 };

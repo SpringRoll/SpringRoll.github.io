@@ -1,11 +1,12 @@
 <template>
   <div class="editor">
-    <quill-editor v-model=content class="editor__quill"/>
+    <quill-editor v-model=quillContent @change="onEdit" class="editor__quill"/>
     <div class="editor__controls">
-      <TimeStampInput @time=startTimeUpdated :default=active.start name="start"/>
-      <TimeStampInput @time=endTimeUpdated :default=active.end name="end"/>
+      <TimeStampInput @time=startTimeUpdated :default=start name="start"/>
+      <TimeStampInput @time=endTimeUpdated :default=end name="end"/>
     </div>
-    <v-btn :block=true color="accent" class="editor__button font-16 font-semi-bold capitalize">{{0 === captionIndex ? 'Add Caption' : 'Remove Caption'}}</v-btn>
+    <v-btn @click="nextIndex" :disabled=!canAdd v-if="atLastIndex" :block=true color="accent" class="editor__button font-16 font-semi-bold capitalize">Add Caption</v-btn>
+    <v-btn v-else :block=true color="accent" class="editor__button font-16 font-semi-bold capitalize">Remove Caption</v-btn>
   </div>
 </template>
 
@@ -20,75 +21,127 @@ export default {
   data() {
     return {
       captions: {},
-      content: '',
-      start: 0,
-      end: 0,
       active: new Caption(''),
-      captionIndex: 0
+      currentIndex: 0,
+      quillContent: '',
+      canRemove: false,
+      start: 0,
+      end: 0
     };
   },
-  watch:{
-    content() {
-      this.active.updateContent({
-        content: this.content
-      });
-      this.put();
+  computed: {
+    atLastIndex() {
+      return Array.isArray(this.captions[this.active.name]) && this.currentIndex === (this.captions[this.active.name].length - 1);
+    },
+    canAdd() {
+      // If times are not properly set
+      if (this.active.start >= this.active.end) {
+        return false;
+      }
+
+      const currentCaption = this.captions[this.active.name];
+
+      // If the only caption, allow
+      if (2 > currentCaption.length) {
+        return true;
+      }
+
+      // If not at the last index
+      if (this.currentIndex !== currentCaption.length - 1) {
+        return false;
+      }
+
+      const current = currentCaption[this.currentIndex];
+      const previous = currentCaption[this.currentIndex - 1];
+
+      if (previous.end > current.start) {
+        return false;
+      }
+
+      return true;
     }
   },
   methods: {
+    onEdit($event) {
+      this.active.updateContent({
+        content: $event.html
+      });
+      this.emit();
+    },
+    swap() {
+      this.canRemove = !this.canRemove;
+    },
     startTimeUpdated($event) {
       this.active.updateContent({
         start: $event
       });
-      this.put();
+      this.emit();
     },
     endTimeUpdated($event) {
       this.active.updateContent({
         end: $event
       });
-      this.put();
+      this.emit();
     },
-    changeCaptionFile($event) {
+    fileChange($event) {
       const name = $event.file.name.replace(/.(ogg|mp3|mpeg)$/, '').trim();
 
       if (!name.length || name === this.active.name) {
         return;
       }
 
-      this.put();
-
-      this.active = 'undefined' !== typeof this.captions[name]
-        ? new Caption(name, this.captions[name][0])
-        : new Caption(name);
-
-      const {end, start, content} = this.active;
-
-      this.content = content;
-      this.end = end;
-      this.start = start;
-    },
-    put() {
-      if (this.active.name.length) {
-        this.captions[this.active.name] = this.active.getData();
-
-        //NOTE: Currently we are only using one index in the array, but if/when we update a caption to have multiple indexs this will have to change
-        if (this.captions[this.active.name][0].content.length < 1) {
-          this.captions[this.active.name][0].content = ' ';
-        }
-
-        EventBus.$emit('json_updated', { name:this.active.name, captions: this.captions});
+      if (!Array.isArray(this.captions[name])) {
+        this.captions[name] = [{content: '', end: 0, start: 0}];
       }
+
+      this.active.name = name;
+
+      this.currentIndex = 0;
+      this.changeActive();
+
     },
-    hasActive() {
-      return 'undefined' !== typeof this.captions[this.active.name];
-    }
+    nextIndex() {
+      this.currentIndex++;
+      if ('undefined' === typeof this.captions[this.active.name][this.currentIndex]) {
+        const t = this.captions[this.active.name][this.currentIndex - 1].end + 1;
+        this.captions[this.active.name].push({content: '', end: t, start: t});
+      }
+
+      this.changeActive();
+    },
+    prevIndex() {
+      this.currentIndex -= (0 < this.currentIndex) ? 1 : 0;
+      this.changeActive();
+      this.emit();
+    },
+
+    changeActive() {
+      this.active.updateContent(this.captions[this.active.name][this.currentIndex]);
+      this.quillContent = this.active.content;
+      this.start = this.active.start;
+      this.end = this.active.end;
+      this.emit();
+    },
+
+    emit() {
+      const data = this.active.getData();
+      if (!data.content.length) {
+        data.content = ' ';
+      }
+      this.captions[this.active.name][this.currentIndex] = data;
+      EventBus.$emit('json_updated', { name:this.active.name, captions: this.captions, index: this.currentIndex});
+    },
   },
 
   mounted() {
-    EventBus.$on('file_selected', this.changeCaptionFile);
+    EventBus.$on('file_selected', this.fileChange);
+    EventBus.$on('index_next', this.nextIndex);
+    EventBus.$on('index_prev', this.prevIndex);
   },
   destroyed() {
-    EventBus.$off('file_selected', this.changeCaptionFile);
+    EventBus.$off('file_selected', this.fileChange);
+    EventBus.$off('index_next', this.nextIndex);
+    EventBus.$off('index_prev', this.prevIndex);
   }
 };
 </script>

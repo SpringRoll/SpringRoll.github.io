@@ -1,32 +1,19 @@
 <template>
   <div class="time-stamp">
-    {{minute}}:{{second}}:{{mili}}
+    {{minutes}}:{{seconds}}:{{milliseconds}}
   </div>
 </template>
 
 <script>
-import { EventBus } from '@/class/EventBus';
 import TimeStampMixin from '@/mixins/TimeStamp';
 export default {
   props: {
-    input: {
+    time: {
       type: Number,
-      required: true,
-      default: 0.0
+      default: 0
     }
   },
   mixins: [TimeStampMixin],
-  watch: {
-    input() {
-      this.updateTime(this.input);
-    }
-  },
-  mounted() {
-    EventBus.$on('time_get', this.emitTime);
-  },
-  destroyed() {
-    EventBus.$off('time_get', this.emitTime);
-  }
 };
 </script>
 

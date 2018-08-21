@@ -3,28 +3,38 @@
     <div class="captions__toolbar"/>
     <div class="captions__content"/>
     <div class="captions__navigation">
-      <v-btn color="accent" class="font-semi-bold font-16 capitalize" :block=true>Previous</v-btn>
-      <v-btn color="accent" class="font-semi-bold font-16 capitalize" :block=true>Next</v-btn>
+      <v-btn color="accent" @click=prev class="font-semi-bold font-16 capitalize" :block=true :disabled="0 === index">Previous</v-btn>
+      <v-btn color="accent" @click=next  class="font-semi-bold font-16 capitalize" :block=true :disabled="max === index">Next</v-btn>
     </div>
   </div>
 </template>
 
 <script>
-import { CaptionPlayer, CaptionFactory, HtmlRenderer } from 'springroll';
+import {CaptionFactory, CaptionPlayer, HtmlRenderer } from 'springroll';
 import { EventBus } from '@/class/EventBus';
 export default {
   data() {
     return {
-      captionPlayer: null
+      captionPlayer: null,
+      index: 0,
+      max: 0
     };
   },
   methods: {
     setCaptions($event) {
+      this.max = $event.captions[$event.name].length - 1;
+      this.index = $event.index;
       this.captionPlayer.captions = CaptionFactory.createCaptionMap($event.captions);
-      this.captionPlayer.start($event.name);
+      this.captionPlayer.start($event.name, $event.captions[$event.name][$event.index].start);
     },
     setup() {
       this.captionPlayer = new CaptionPlayer([], new HtmlRenderer(document.getElementsByClassName('captions__content')[0]));
+    },
+    next() {
+      EventBus.$emit('index_next');
+    },
+    prev() {
+      EventBus.$emit('index_prev');
     }
   },
   mounted() {

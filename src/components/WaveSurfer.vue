@@ -20,7 +20,7 @@
         </v-btn>
       </div>
       <div class="wave__timer">
-        <TimeStamp :input="currentTime"/>
+        <TimeStamp :time="currentTime"/>
       </div>
     </div>
   </div>
@@ -41,22 +41,12 @@ export default {
       wave: null,
       isPlaying: false,
       hasFile: false,
-      currentTime: 0.0
+      currentTime: 0
     };
   },
-  computed: {
-    timeStamp() {
-      const prepend = (i) => i < 10 ? '0' + i : i;
-      const minutes = this.currentTime / 60 | 0;
-      const seconds = this.currentTime % 60 | 0;
-      const miliSeconds = ((this.currentTime % 1) * 100) | 0;
-      return `${prepend(minutes)}:${prepend(seconds)}:${prepend(miliSeconds)}`;
-    }
-  },
   methods: {
-    updateTimeStamp() {
-      this.currentTime = this.wave.getCurrentTime();
-      // this.$emit('time', this.currentTime);
+    updateTimeStamp($event) {
+      this.currentTime = $event * 1000 | 0;
     },
     initWave() {
       this.wave = WaveSurfer.create({
@@ -105,15 +95,19 @@ export default {
         this.currentTime = 0.0;
         this.wave.loadBlob($event.file);
       }
+    },
+    emitTime() {
+      EventBus.$emit('time_current', {time: this.currentTime});
     }
-
   },
   mounted() {
     this.initWave();
     EventBus.$on('file_selected', this.loadFile);
+    EventBus.$on('time_get', this.emitTime);
   },
   destroyed() {
     EventBus.$off('file_selected', this.loadFile);
+    EventBus.$off('time_get', this.emitTime);
   }
 
 };
