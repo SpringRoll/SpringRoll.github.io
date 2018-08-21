@@ -17,15 +17,17 @@ export default {
     return {
       captionPlayer: null,
       index: 0,
-      max: 0
+      max: 0,
+      name: ''
     };
   },
   methods: {
     setCaptions($event) {
-      this.max = $event.captions[$event.name].length - 1;
+      this.name = $event.name;
+      this.max = $event.captions[this.name].length - 1;
       this.index = $event.index;
       this.captionPlayer.captions = CaptionFactory.createCaptionMap($event.captions);
-      this.captionPlayer.start($event.name, $event.captions[$event.name][$event.index].start);
+      this.captionPlayer.start(this.name, $event.captions[this.name][$event.index].start);
     },
     setup() {
       this.captionPlayer = new CaptionPlayer([], new HtmlRenderer(document.getElementsByClassName('captions__content')[0]));
@@ -35,14 +37,20 @@ export default {
     },
     prev() {
       EventBus.$emit('index_prev');
+    },
+    update({time}) {
+      this.captionPlayer.start(this.name, time);
+
     }
   },
   mounted() {
     EventBus.$on('json_updated', this.setCaptions);
+    EventBus.$on('time_current', this.update);
     this.setup();
   },
   destroyed() {
     EventBus.$off('json_updated', this.setCaptions);
+    EventBus.$off('time_current', this.update);
   }
 };
 </script>

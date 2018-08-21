@@ -68,9 +68,6 @@ export default {
       });
       this.emit();
     },
-    swap() {
-      this.canRemove = !this.canRemove;
-    },
     startTimeUpdated($event) {
       this.active.updateContent({
         start: $event
@@ -85,17 +82,13 @@ export default {
     },
     fileChange($event) {
       const name = $event.file.name.replace(/.(ogg|mp3|mpeg)$/, '').trim();
-
       if (!name.length || name === this.active.name) {
         return;
       }
-
       if (!Array.isArray(this.captions[name])) {
         this.captions[name] = [{content: '', end: 0, start: 0}];
       }
-
       this.active.name = name;
-
       this.currentIndex = 0;
       this.changeActive();
 
@@ -103,7 +96,7 @@ export default {
     nextIndex() {
       this.currentIndex++;
       if ('undefined' === typeof this.captions[this.active.name][this.currentIndex]) {
-        const t = this.captions[this.active.name][this.currentIndex - 1].end + 1;
+        const t = this.captions[this.active.name][this.currentIndex - 1].end + 10;
         this.captions[this.active.name].push({content: '', end: t, start: t});
       }
 

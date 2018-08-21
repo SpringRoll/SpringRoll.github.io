@@ -26,7 +26,6 @@
   </div>
 </template>
 
-
 <script>
 import { EventBus } from '@/class/EventBus';
 import TimeStamp from './TimeStamp';
@@ -45,19 +44,18 @@ export default {
     };
   },
   methods: {
-    updateTimeStamp($event) {
-      this.currentTime = $event * 1000 | 0;
+    updateTimeStamp() {
+      this.currentTime = this.wave.getCurrentTime() * 1000 | 0;
+      EventBus.$emit('time_current', {time: this.currentTime});
     },
     initWave() {
       this.wave = WaveSurfer.create({
         container: '#wave__container',
         cursorColor: '#000',
-        cursorWidth: 1,
         fillParent: true,
-        height: 201,
+        height: 200,
         mediaControls: true,
         mediaType: 'audio',
-        minPxPerSec: 100,
         normalize: true,
         progressColor: 'rgba(0,0,0,0)',
         responsive: true,
