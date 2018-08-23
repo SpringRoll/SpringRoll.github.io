@@ -46,7 +46,7 @@ export default {
   methods: {
     updateTimeStamp() {
       this.currentTime = this.wave.getCurrentTime() * 1000 | 0;
-      EventBus.$emit('time_current', {time: this.currentTime});
+      this.emitTime();
     },
     initWave() {
       this.wave = WaveSurfer.create({

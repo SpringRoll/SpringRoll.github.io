@@ -1,2 +1,10 @@
 import Vue from 'vue';
-export const EventBus = new Vue();
+import { CaptionManager } from './CaptionManager';
+
+class EventBusManager extends Vue {}
+
+
+
+export const EventBus = new EventBusManager();
+export const captionManager = new CaptionManager();
+

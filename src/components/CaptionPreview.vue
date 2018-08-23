@@ -3,8 +3,8 @@
     <div class="captions__toolbar"/>
     <div class="captions__content"/>
     <div class="captions__navigation">
-      <v-btn color="accent" @click=prev class="font-semi-bold font-16 capitalize" :block=true :disabled="0 === index">Previous</v-btn>
-      <v-btn color="accent" @click=next  class="font-semi-bold font-16 capitalize" :block=true :disabled="max === index">Next</v-btn>
+      <v-btn color="accent" @click=prev class="font-semi-bold font-16 capitalize" :block=true :disabled="atStart">Previous</v-btn>
+      <v-btn color="accent" @click=next  class="font-semi-bold font-16 capitalize" :block=true :disabled="atEnd">Next</v-btn>
     </div>
   </div>
 </template>
@@ -21,36 +21,49 @@ export default {
       name: ''
     };
   },
+  computed: {
+    atEnd() {
+      return this.max <= this.index && 0 === this.max;
+    },
+    atStart() {
+      return 0 >= this.index;
+    }
+  },
   methods: {
-    setCaptions($event) {
-      this.name = $event.name;
-      this.max = $event.captions[this.name].length - 1;
-      this.index = $event.index;
-      this.captionPlayer.captions = CaptionFactory.createCaptionMap($event.captions);
-      this.captionPlayer.start(this.name, $event.captions[this.name][$event.index].start);
+    prev() {
+
+    },
+    next() {
+
+    },
+    setActiveCaption($event) {
+      const { name, index, lastIndex } = $event;
+      this.name = name;
+      this.index = index;
+      this.max = lastIndex - 1;
     },
     setup() {
       this.captionPlayer = new CaptionPlayer([], new HtmlRenderer(document.getElementsByClassName('captions__content')[0]));
     },
-    next() {
-      EventBus.$emit('index_next');
+    loadCaptionData($event) {
+      this.data = $event;
+      this.captionPlayer.captions = CaptionFactory.createCaptionMap($event);
+      this.captionPlayer.start(this.name, this.data[this.name][this.index].start);
     },
-    prev() {
-      EventBus.$emit('index_prev');
-    },
-    update({time}) {
-      this.captionPlayer.start(this.name, time);
-
+    onTimeChange($event) {
+      this.captionPlayer.start(this.name, $event.time);
     }
   },
   mounted() {
-    EventBus.$on('json_updated', this.setCaptions);
-    EventBus.$on('time_current', this.update);
     this.setup();
+    EventBus.$on('caption_changed', this.setActiveCaption);
+    EventBus.$on('caption_data', this.loadCaptionData);
+    EventBus.$on('time_current', this.onTimeChange);
   },
   destroyed() {
-    EventBus.$off('json_updated', this.setCaptions);
-    EventBus.$off('time_current', this.update);
+    EventBus.$off('caption_changed', this.setActiveCaption);
+    EventBus.$off('caption_data', this.loadCaptionData);
+    EventBus.$off('time_current', this.onTimeChange);
   }
 };
 </script>

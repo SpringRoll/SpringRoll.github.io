@@ -20,9 +20,12 @@ export default {
     };
   },
   methods: {
+    onUpdate() {
+      EventBus.$emit('caption_get');
+    },
     update(data) {
-      this.data = data.captions;
-      this.json = JSON.stringify(data.captions, null, 2);
+      this.data = data;
+      this.json = JSON.stringify(data, null, 2);
       this.createBlob();
     },
     createBlob() {
@@ -38,10 +41,12 @@ export default {
   },
   mounted() {
     this.createBlob();
-    EventBus.$on('json_updated', this.update);
+    EventBus.$on('caption_update', this.onUpdate);
+    EventBus.$on('caption_data', this.update);
   },
   destroyed() {
-    EventBus.$off('json_updated', this.update);
+    EventBus.$off('caption_update', this.onUpdate);
+    EventBus.$on('caption_data', this.update);
   }
 };
 </script>
