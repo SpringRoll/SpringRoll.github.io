@@ -5,6 +5,7 @@ import Example from '@/views/Example';
 import Main from '@/views/Main';
 import Docs from '@/views/Docs';
 import CaptionStudio from '@/views/CaptionStudio';
+import Game from '@/views/Game';
 
 // Example views
 import SpeechSynth from '@/views/examples/SpeechSynth';
@@ -18,6 +19,7 @@ Vue.use(Router);
 export default new Router({
   routes: [
     { path: '/', name: 'home', component: Main, title: 'Main', icon: 'home' },
+    { path: '/game', name: 'game', component: Game, title: 'Game Demo', icon: 'code'},
     {
       path: '/docs',
       name: 'docs',
