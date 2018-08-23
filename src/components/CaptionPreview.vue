@@ -17,30 +17,30 @@ export default {
     return {
       captionPlayer: null,
       index: 0,
-      max: 0,
+      lastIndex: 0,
       name: ''
     };
   },
   computed: {
     atEnd() {
-      return this.max <= this.index && 0 === this.max;
+      return this.lastIndex === this.index || 0 === this.lastIndex;
     },
     atStart() {
-      return 0 >= this.index;
+      return 0 === this.index;
     }
   },
   methods: {
     prev() {
-
+      EventBus.$emit('caption_move_index', -1);
     },
     next() {
-
+      EventBus.$emit('caption_move_index', 1);
     },
     setActiveCaption($event) {
       const { name, index, lastIndex } = $event;
       this.name = name;
       this.index = index;
-      this.max = lastIndex - 1;
+      this.lastIndex = lastIndex;
     },
     setup() {
       this.captionPlayer = new CaptionPlayer([], new HtmlRenderer(document.getElementsByClassName('captions__content')[0]));
@@ -52,6 +52,10 @@ export default {
     },
     onTimeChange($event) {
       this.captionPlayer.start(this.name, $event.time);
+      const i = this.captionPlayer.activeCaption.lineIndex - 1;
+      if (i !== this.index) {
+        EventBus.$emit('caption_move_index', i);
+      }
     }
   },
   mounted() {

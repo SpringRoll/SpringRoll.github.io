@@ -64,7 +64,7 @@ export default {
 
       this.wave.on('audioprocess',  this.updateTimeStamp);
       this.wave.on('seek', this.updateTimeStamp);
-      this.wave.on('finish', () => this.isPlaying = false);
+      this.wave.on('finish', this.finish);
     },
 
     forward() {
@@ -72,6 +72,11 @@ export default {
     },
     rewind() {
       this.wave.skipBackward();
+    },
+
+    finish() {
+      this.isPlaying = false;
+      this.wave.stop();
     },
 
     play() {

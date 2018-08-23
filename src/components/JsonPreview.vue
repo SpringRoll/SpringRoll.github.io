@@ -24,9 +24,27 @@ export default {
       EventBus.$emit('caption_get');
     },
     update(data) {
-      this.data = data;
-      this.json = JSON.stringify(data, null, 2);
+      this.data = this.cleanData(data);
+      this.json = JSON.stringify(this.data, null, 2);
       this.createBlob();
+    },
+    cleanData(data) {
+      const key = Object.keys(data);
+      const output = {};
+      for (let i = 0, l = key.length; i < l; i++) {
+        if (!Array.isArray(data[key[i]])) {
+          continue;
+        }
+
+        const filtered = data[key[i]].filter(e =>  {
+          return e.content.trim() && e.start < e.end;
+        });
+
+        if (filtered.length) {
+          output[key[i]] = filtered;
+        }
+      }
+      return output;
     },
     createBlob() {
       this.blob = URL.createObjectURL(

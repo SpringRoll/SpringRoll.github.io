@@ -5,8 +5,8 @@
       <TimeStampInput @time=onStartTimeUpdated :default=start name="start"/>
       <TimeStampInput @time=onEndTimeUpdated :default=end name="end"/>
     </div>
-    <v-btn v-if=canAdd @click="addCaption" :disabled=!canAdd :block=true color="accent" class="editor__button font-16 font-semi-bold capitalize">Add Caption</v-btn>
-    <v-btn v-else :block=true color="accent" class="editor__button font-16 font-semi-bold capitalize">Remove Caption</v-btn>
+    <v-btn v-if=canRemove @click=removeCaption :block=true color="accent" class="editor__button font-16 font-semi-bold capitalize">Remove Caption</v-btn>
+    <v-btn v-else @click=addCaption :disabled=!canAdd :block=true color="accent" class="editor__button font-16 font-semi-bold capitalize">Add Caption</v-btn>
   </div>
 </template>
 
@@ -20,16 +20,18 @@ export default {
   data() {
     return {
       index: 0,
-      canRemove: false,
       content: '',
       start: 0,
       end: 0,
-      max: 0
+      lastIndex: 0
     };
   },
   computed: {
     canAdd() {
-      return this.index >= this.max - 1;
+      return this.index >= this.lastIndex;
+    },
+    canRemove() {
+      return this.index < this.lastIndex;
     }
   },
   methods: {
@@ -47,11 +49,14 @@ export default {
       this.content = content;
       this.start = start;
       this.end = end;
-      this.max = $event.max;
+      this.lastIndex = $event.lastIndex;
       this.index = $event.index;
     },
     addCaption() {
-      EventBus.$emit('caption_add');
+      EventBus.$emit('caption_add_index');
+    },
+    removeCaption() {
+      EventBus.$emit('caption_remove_index');
     }
   },
 
