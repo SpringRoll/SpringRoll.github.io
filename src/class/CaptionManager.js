@@ -13,11 +13,6 @@ export class CaptionManager {
     EventBus.$on('file_selected', this.fileChanged.bind(this));
     EventBus.$on('caption_move_index', this.moveIndex.bind(this));
     EventBus.$on('caption_remove_index', this.removeAtIndex.bind(this));
-    EventBus.$on('time_current', this.onTimeChange.bind(this));
-  }
-
-  onTimeChange() {
-
   }
 
   fileChanged($event) {
