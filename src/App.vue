@@ -6,6 +6,7 @@
       <router-link active-class="--active" class="nav__button nav__text font font-21" to="/examples">Examples</router-link>
       <router-link active-class="--active" class="nav__button nav__text font font-21" to="/docs">Docs</router-link>
       <router-link active-class="--active" class="nav__button nav__text font font-21" to="/captions">Caption Studio</router-link>
+      <router-link active-class="--active" class="nav__button nav__text font font-21" to="/v1">SpringRoll 1.0</router-link>
       <a class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll" target="_blank">Github</a>
       <a class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll/wiki" target="_blank">Wiki</a>
     </v-toolbar>
