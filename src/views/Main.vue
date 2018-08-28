@@ -3,7 +3,9 @@
     <img class="main__logo" src="@/assets/logo.png" alt="SpringRoll Logo">
     <h1 class="main__title">SpringRoll</h1>
     <div class="main__about font-31">
-      Keytar McSweeney's Williamsburg, readymade leggings try-hard 90's street art letterpress hoodie occupy Wes Anderson Banksy. Asymmetrical viral letterpress, McSweeney's seitan 3 wolf moon drinking vinegar sartorial pour-over messenger bag photo booth umami next level craft beer.
+      SpringRoll is a light-weight toolset for building accessible HTML5 games,
+      focusing on utilities to help developers make games more accessible
+      and deployable at scale.
     </div>
     <!-- <Game/> -->
   </div>
