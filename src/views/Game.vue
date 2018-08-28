@@ -1,6 +1,6 @@
 <template>
   <div class="game__container">
-    <iframe id="demo-game" class="game" :src="base + 'game/index.html'" frameborder="0" />
+    <iframe id="demo-game" class="game" src="http://springroll.io/springroll-io-demo-game/" frameborder="0" />
     <div class="game__events">
       <h2>Game Events</h2>
       <div v-for="(event, key) in events" :key=key :class="{'--active': event.on }" class="game__event">{{event.label}}</div>
@@ -9,11 +9,9 @@
 </template>
 
 <script>
-import Iframe from '@/mixins/Iframe';
 import { Bellhop } from 'bellhop-iframe';
 
 export default {
-  mixins: [Iframe],
   data() {
     return {
       bellhop: new Bellhop('demo-game'),
