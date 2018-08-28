@@ -7,7 +7,6 @@
       focusing on utilities to help developers make games more accessible
       and deployable at scale.
     </div>
-    <!-- <Game/> -->
   </div>
 </template>
 

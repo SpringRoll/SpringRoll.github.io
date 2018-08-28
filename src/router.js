@@ -5,6 +5,8 @@ import Example from '@/views/Example';
 import Main from '@/views/Main';
 import Docs from '@/views/Docs';
 import CaptionStudio from '@/views/CaptionStudio';
+import Game from '@/views/Game';
+import V1 from '@/views/V1';
 
 // Example views
 import SpeechSynth from '@/views/examples/SpeechSynth';
@@ -18,6 +20,7 @@ Vue.use(Router);
 export default new Router({
   routes: [
     { path: '/', name: 'home', component: Main, title: 'Main', icon: 'home' },
+    { path: '/game', name: 'game', component: Game, title: 'Game Demo', icon: 'code'},
     {
       path: '/docs',
       name: 'docs',
@@ -30,6 +33,13 @@ export default new Router({
       name: 'captions',
       component: CaptionStudio,
       title: 'Caption Studio',
+      icon: 'code'
+    },
+    {
+      path: '/v1',
+      name: 'v1',
+      component: V1,
+      title: 'SpringRoll 1.0',
       icon: 'code'
     },
     {

@@ -98,38 +98,13 @@ export default {
 
 <style lang="scss">
 @import "~@/scss/colors";
+@import "~@/scss/mixins";
 .control {
   &__key {
-    $key-size: 4.4rem;
-    $key-gap: 0.56rem;
-    height: $key-size;
-    width: $key-size;
-    border-radius: 4px;
-    background-color: #f7f7f7;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.12),
-      0 1px 3px 0 rgba(0, 0, 0, 0.2);
-    color: $accent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: capitalize;
-    margin: $key-gap;
-
-    &.--active {
-      background-color: $accent;
-      color: $white;
-    }
+    @include key();
 
     &.--empty {
       margin-right: 6.6rem;
-    }
-
-    &.--medium {
-      width: ($key-size + $key-gap + 0.3) * 3;
-    }
-
-    &.--large {
-      width: ($key-size + $key-gap + 0.5) * 5;
     }
   }
 
