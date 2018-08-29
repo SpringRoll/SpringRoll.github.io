@@ -21,13 +21,11 @@ export class Caption {
   getData() {
     const { content, start, end } = this;
 
-    return [
-      {
-        content,
-        end,
-        start
-      }
-    ];
+    return {
+      content,
+      end,
+      start
+    };
   }
   updateContent({
     name = this.name,

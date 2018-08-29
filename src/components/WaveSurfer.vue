@@ -20,12 +20,11 @@
         </v-btn>
       </div>
       <div class="wave__timer">
-        <TimeStamp :input="currentTime"/>
+        <TimeStamp :time="currentTime"/>
       </div>
     </div>
   </div>
 </template>
-
 
 <script>
 import { EventBus } from '@/class/EventBus';
@@ -41,33 +40,22 @@ export default {
       wave: null,
       isPlaying: false,
       hasFile: false,
-      currentTime: 0.0
+      currentTime: 0
     };
-  },
-  computed: {
-    timeStamp() {
-      const prepend = (i) => i < 10 ? '0' + i : i;
-      const minutes = this.currentTime / 60 | 0;
-      const seconds = this.currentTime % 60 | 0;
-      const miliSeconds = ((this.currentTime % 1) * 100) | 0;
-      return `${prepend(minutes)}:${prepend(seconds)}:${prepend(miliSeconds)}`;
-    }
   },
   methods: {
     updateTimeStamp() {
-      this.currentTime = this.wave.getCurrentTime();
-      // this.$emit('time', this.currentTime);
+      this.currentTime = this.wave.getCurrentTime() * 1000 | 0;
+      this.emitTime();
     },
     initWave() {
       this.wave = WaveSurfer.create({
         container: '#wave__container',
         cursorColor: '#000',
-        cursorWidth: 1,
         fillParent: true,
-        height: 201,
+        height: 200,
         mediaControls: true,
         mediaType: 'audio',
-        minPxPerSec: 100,
         normalize: true,
         progressColor: 'rgba(0,0,0,0)',
         responsive: true,
@@ -76,7 +64,7 @@ export default {
 
       this.wave.on('audioprocess',  this.updateTimeStamp);
       this.wave.on('seek', this.updateTimeStamp);
-      this.wave.on('finish', () => this.isPlaying = false);
+      this.wave.on('finish', this.finish);
     },
 
     forward() {
@@ -84,6 +72,11 @@ export default {
     },
     rewind() {
       this.wave.skipBackward();
+    },
+
+    finish() {
+      this.isPlaying = false;
+      this.wave.stop();
     },
 
     play() {
@@ -105,15 +98,19 @@ export default {
         this.currentTime = 0.0;
         this.wave.loadBlob($event.file);
       }
+    },
+    emitTime() {
+      EventBus.$emit('time_current', {time: this.currentTime});
     }
-
   },
   mounted() {
     this.initWave();
     EventBus.$on('file_selected', this.loadFile);
+    EventBus.$on('time_get', this.emitTime);
   },
   destroyed() {
     EventBus.$off('file_selected', this.loadFile);
+    EventBus.$off('time_get', this.emitTime);
   }
 
 };

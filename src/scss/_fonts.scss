@@ -45,6 +45,10 @@ $body-font-family: $assistant;
   src: url($font-path-assistant + 'ExtraLight.ttf') format('truetype');
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 .font {
   font-family: $assistant;
 }

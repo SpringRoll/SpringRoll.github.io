@@ -69,7 +69,6 @@ export default {
   destroyed() {
     this.container.destroy();
   }
-
 };
 </script>
 
