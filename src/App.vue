@@ -8,7 +8,6 @@
       <router-link active-class="--active" class="nav__button nav__text font font-21" to="/captions">Caption Studio</router-link>
       <router-link active-class="--active" class="nav__button nav__text font font-21" to="/v1">SpringRoll 1.0</router-link>
       <a class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll" target="_blank">Github</a>
-      <a class="nav__button nav__text font-21" href="https://github.com/SpringRoll/SpringRoll/wiki" target="_blank">Wiki</a>
     </v-toolbar>
     <v-toolbar app class="nav__bar --compact">
       <router-link class="nav__button --logo" to="/"><img class=" nav__logo" src="@/assets/logo.png" alt="logo" /></router-link>

@@ -1,7 +1,7 @@
 <template>
   <Example title="Filter Example" :large="true">
     <div slot="example">
-      <img width="50%" height="50%" class="filter__image" ref="image" src="@/assets/example.jpg" alt="Example Image">
+      <img width="50%" class="filter__image" ref="image" src="@/assets/example.jpg" alt="Example Image">
       <label class="filter__label font-12">Color Filter</label>
       <v-select class="filter__select" v-model="selected" item-text="name" :items="types" @input="changeFilter($event)" />
     </div>

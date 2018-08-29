@@ -83,7 +83,7 @@ export default {
   }
 
   &__button {
-    height: 4.4rem !important;
+    min-height: 4.4rem !important;
   }
 
   &__container {
