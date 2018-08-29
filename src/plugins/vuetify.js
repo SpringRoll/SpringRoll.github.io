@@ -12,7 +12,8 @@ import {
   VIcon,
   VNavigationDrawer,
   VCard,
-  VExpansionPanel
+  VExpansionPanel,
+  VDialog
 } from 'vuetify';
 import 'vuetify/src/stylus/app.styl';
 
@@ -29,7 +30,8 @@ Vue.use(Vuetify, {
     VIcon,
     VNavigationDrawer,
     VCard,
-    VExpansionPanel
+    VExpansionPanel,
+    VDialog
   },
   theme: {
     primary: '#095B8F',

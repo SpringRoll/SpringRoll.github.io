@@ -91,11 +91,15 @@ export default {
       EventBus.$emit('next_file');
     },
 
+    empty() {
+      this.wave.empty();
+      this.currentTime = 0;
+    },
     loadFile($event) {
       if ($event.file instanceof File) {
         this.isPlaying = false;
         this.hasFile = true;
-        this.currentTime = 0.0;
+        // this.currentTime = $event.time;
         this.wave.loadBlob($event.file);
       }
     },
@@ -105,12 +109,15 @@ export default {
   },
   mounted() {
     this.initWave();
-    EventBus.$on('file_selected', this.loadFile);
+    EventBus.$on('caption_changed', this.loadFile);
     EventBus.$on('time_get', this.emitTime);
+    EventBus.$on('caption_reset', this.empty);
   },
   destroyed() {
-    EventBus.$off('file_selected', this.loadFile);
+    EventBus.$off('caption_changed', this.loadFile);
     EventBus.$off('time_get', this.emitTime);
+    EventBus.$off('caption_reset', this.empty);
+    this.wave.destroy();
   }
 
 };

@@ -3,7 +3,7 @@
     <v-text-field class="explorer__search" @input="filter" prepend-inner-icon="search" placeholder="Search file names" solo />
     <h3 class="font-28 font-semi-bold explorer__header">Files</h3>
     <div class="explorer__dir">
-      <file-directory v-if="hasFiles" v-for="(value, key) in directory.dir" :key="key" :directory="value" :name="key" :active="active" />
+      <file-directory v-for="(value, key) in directory.dir" :key="key" :directory="value" :name="key" :active="active" />
     </div>
     <div color="accent" class="v-btn accent explorer__input font-semi-bold font-16">
       <span>Import Files</span>
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import Directory from '@/class/Directory';
 import FileProcessor from '@/class/FileProcessor';
 import FileDirectory from '@/components/FileDirectory';
 import { EventBus } from '@/class/EventBus';
@@ -23,25 +22,22 @@ export default {
   },
   data() {
     return {
-      factory: new FileProcessor(),
-      directory: new Directory(),
-      hasFiles: false,
+      directory: FileProcessor.getDirectory(),
       rawFiles: null,
       active: null,
     };
   },
   methods: {
     filter($event) {
-      this.factory.setNameFilter($event);
-      this.directory = this.factory.generateDirectories(this.rawFiles);
+      FileProcessor.setNameFilter($event);
+      this.directory = FileProcessor.generateDirectories(this.rawFiles);
     },
     loadFiles($event) {
       if (!$event.target.files.length) {
         return;
       }
-      this.hasFiles = true;
       this.rawFiles = $event.target.files;
-      this.directory = this.factory.generateDirectories(this.rawFiles);
+      this.directory = FileProcessor.generateDirectories(this.rawFiles);
     },
 
     setActive($event) {
@@ -51,10 +47,10 @@ export default {
     }
   },
   mounted() {
-    EventBus.$on('file_selected', this.setActive);
+    EventBus.$on('caption_changed', this.setActive);
   },
   destroyed() {
-    EventBus.$off('file_selected', this.setActive);
+    EventBus.$off('caption_changed', this.setActive);
   }
 };
 </script>

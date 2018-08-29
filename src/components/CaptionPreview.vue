@@ -43,7 +43,10 @@ export default {
       this.lastIndex = lastIndex;
     },
     setup() {
-      this.captionPlayer = new CaptionPlayer([], new HtmlRenderer(document.getElementsByClassName('captions__content')[0]));
+      const element = document.getElementsByClassName('captions__content')[0];
+      element.innerHTML = '';
+
+      this.captionPlayer = new CaptionPlayer([], new HtmlRenderer(element));
     },
     loadCaptionData($event) {
       this.data = $event;
@@ -56,18 +59,20 @@ export default {
       if (i !== this.index) {
         EventBus.$emit('caption_move_index', i);
       }
-    }
+    },
   },
   mounted() {
     this.setup();
     EventBus.$on('caption_changed', this.setActiveCaption);
     EventBus.$on('caption_data', this.loadCaptionData);
     EventBus.$on('time_current', this.onTimeChange);
+    EventBus.$on('caption_reset', this.setup);
   },
   destroyed() {
     EventBus.$off('caption_changed', this.setActiveCaption);
     EventBus.$off('caption_data', this.loadCaptionData);
     EventBus.$off('time_current', this.onTimeChange);
+    EventBus.$off('caption_reset', this.setup);
   }
 };
 </script>

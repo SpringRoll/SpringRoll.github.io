@@ -1,8 +1,25 @@
 <template>
   <div class="json">
     <pre v-highlightjs="json"><code class="javascript code-block --wide json__container"></code></pre>
-
-    <v-btn download="export.json" target="_blank" :href=blob color="accent" class="font-semi-bold --capital json__button">Export Code</v-btn>
+    <div class="json__button-group">
+      <v-dialog v-model="dialog" width="500">
+        <v-btn slot="activator" color="error" class="font-semi-bold --capital json__button-cancel">Clear</v-btn>
+        <v-card>
+          <v-card-title class="error" primary-title>
+            <h2 class="font-semi-bold json__dialog-title">Warning</h2>
+          </v-card-title>
+          <v-card-text>
+            <span class="">This will clear all captions.</span>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="accent" @click="dialog = false" class="font-semi-bold font-16 --capital">Cancel</v-btn>
+            <v-btn color="error" @click="reset" class="font-semi-bold font-16 --capital">Ok</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-btn download="export.json" target="_blank" :href=blob color="accent" class="font-semi-bold --capital json__button-export">Export Code</v-btn>
+    </div>
   </div>
 
 </template>
@@ -17,6 +34,7 @@ export default {
       json,
       data,
       blob: null,
+      dialog: false
     };
   },
   methods: {
@@ -55,6 +73,11 @@ export default {
           { type: 'application/json' }
         )
       );
+    },
+    reset() {
+      EventBus.$emit('caption_reset');
+      this.dialog = false;
+      this.update({});
     }
   },
   mounted() {
@@ -70,6 +93,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/scss/colors';
 .json {
   display: flex;
   flex-direction: column;
@@ -90,10 +114,26 @@ export default {
   }
 
   &__button {
-    width: 15.8rem;
-    height: 3.6rem;
-    align-self: flex-end;
-    margin: 0.8rem 0 2rem !important;
+    &-export {
+      width: 15.8rem;
+      height: 3.6rem;
+    }
+
+    &-cancel, &-export {
+      margin: 0 !important;
+    }
+
+    &-group {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      margin: 1.5rem 0 3rem;
+    }
+  }
+
+  &__dialog-title {
+    color: $white;
   }
 }
 </style>

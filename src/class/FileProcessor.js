@@ -14,7 +14,7 @@ import Directory from './Directory';
  * @param {FileList} files
  * @param {FileProcessorOptions} options
  */
-export default class FileProcessor {
+class FileProcessor {
   constructor(
     files = null,
     { fileFilter = /(audio\/(mp3|ogg|mpeg)|video\/ogg)$/, nameFilter = '' } = {}
@@ -23,6 +23,8 @@ export default class FileProcessor {
     this.fileFilter = fileFilter;
     this.setNameFilter(nameFilter);
     this.generateDirectories(files);
+    this.directory = new Directory();
+    this.hasFiles = false;
   }
 
   /**
@@ -44,6 +46,7 @@ export default class FileProcessor {
         this.nameFilter.test(files[i].name)
       ) {
         this.directory.addFile(files[i]);
+        this.hasFiles = true;
       }
     }
 
@@ -56,6 +59,7 @@ export default class FileProcessor {
    */
   clear() {
     this.directory = new Directory();
+    this.hasFiles = false;
   }
 
   /**
@@ -70,4 +74,10 @@ export default class FileProcessor {
     }
     this.nameFilter = new RegExp(`(${name})`, 'g');
   }
+
+  getDirectory() {
+    return this.directory;
+  }
 }
+
+export default new FileProcessor();

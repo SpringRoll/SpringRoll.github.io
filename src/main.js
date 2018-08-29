@@ -9,6 +9,9 @@ import './plugins';
 // Styles
 import './scss/main.scss';
 
+// State
+import './class/CaptionManager';
+
 Vue.config.productionTip = false;
 
 new Vue({

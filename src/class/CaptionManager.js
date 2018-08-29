@@ -1,18 +1,22 @@
 import { EventBus } from './EventBus';
-export class CaptionManager {
+class CaptionManager {
 
   constructor() {
     this.data = {};
     this.activeCaption = undefined;
     this.activeIndex = 0;
+    this.file = new File([], 'NO_FILE');
+    this.currentTime = 0;
     EventBus.$on('caption_update', this.updateActiveCaption.bind(this));
-    EventBus.$on('caption_reset', this.resetCaptions.bind(this));
+    EventBus.$on('caption_reset', this.reset.bind(this));
     EventBus.$on('caption_add', this.addCaption.bind(this));
     EventBus.$on('caption_add_index', this.addIndex.bind(this));
     EventBus.$on('caption_get', this.emitData.bind(this));
     EventBus.$on('file_selected', this.fileChanged.bind(this));
     EventBus.$on('caption_move_index', this.moveIndex.bind(this));
     EventBus.$on('caption_remove_index', this.removeAtIndex.bind(this));
+    EventBus.$on('caption_emit', this.emit.bind(this));
+    EventBus.$on('time_current', (e) => this.currentTime = e.time || 0);
   }
 
   fileChanged($event) {
@@ -20,6 +24,8 @@ export class CaptionManager {
     if (!name || name === this.activeCaption) {
       return;
     }
+
+    this.file = $event.file;
 
     if (!Array.isArray(this.data[name])) {
       this.addCaption(name);
@@ -63,9 +69,10 @@ export class CaptionManager {
     this.emitCurrent();
   }
 
-  resetCaptions() {
+  reset() {
     this.data = {};
-    this.activeCaption = undefined;
+    this.activeIndex = 0;
+    this.activeCaption = '';
   }
 
   moveIndex($event) {
@@ -98,11 +105,23 @@ export class CaptionManager {
   }
 
   emitCurrent() {
-    EventBus.$emit('caption_changed', {name: this.activeCaption, index: this.activeIndex, data: this.currentCaptionIndex, lastIndex: this.lastIndex });
+    EventBus.$emit('caption_changed', {
+      data: this.currentCaptionIndex,
+      file: this.file,
+      index: this.activeIndex,
+      lastIndex: this.lastIndex,
+      name: this.activeCaption,
+      time: this.currentTime
+    });
   }
 
   emitData() {
     EventBus.$emit('caption_data', this.data);
+  }
+
+  emit() {
+    this.emitCurrent();
+    this.emitData();
   }
 
   get lastIndex() {
@@ -131,3 +150,5 @@ export class CaptionManager {
     };
   }
 }
+
+export default new CaptionManager();

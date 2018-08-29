@@ -40,6 +40,7 @@ export default {
       start: 0,
       end: 0,
       lastIndex: 0,
+      canEmit: false,
       sizeOptions: [
         { value: '10px', label: 'Small',  default: false},
         { value: '16px', label: 'Normal', default: true},
@@ -68,12 +69,21 @@ export default {
   },
   methods: {
     onEdit($event) {
+      if (!this.canEmit) {
+        return;
+      }
       EventBus.$emit('caption_update', {content: $event.html });
     },
     onStartTimeUpdated($event) {
+      if (!this.canEmit) {
+        return;
+      }
       EventBus.$emit('caption_update', { start: $event });
     },
     onEndTimeUpdated($event) {
+      if (!this.canEmit) {
+        return;
+      }
       EventBus.$emit('caption_update', { end: $event });
     },
     onUpdate($event) {
@@ -83,6 +93,7 @@ export default {
       this.end = end;
       this.lastIndex = $event.lastIndex;
       this.index = $event.index;
+      this.canEmit = true;
     },
     addCaption() {
       EventBus.$emit('caption_add_index');
@@ -105,14 +116,21 @@ export default {
       }
 
       selection.anchorNode.data = baseString.substring(0, offset) + `{{${text}}}` + baseString.substring(endset, baseString.length);
+    },
+    reset() {
+      this.canEmit = false;
+      this.content = '';
+      this.start = this.end = 0;
     }
   },
 
   mounted() {
     EventBus.$on('caption_changed', this.onUpdate);
+    EventBus.$on('caption_reset', this.reset);
   },
   destroyed() {
     EventBus.$off('caption_changed', this.onUpdate);
+    EventBus.$off('caption_reset', this.reset);
   }
 };
 </script>

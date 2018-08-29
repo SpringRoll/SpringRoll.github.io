@@ -30,6 +30,7 @@ import WaveSurfer from '@/components/WaveSurfer';
 import TextEditor from '@/components/TextEditor';
 import JsonPreview from '@/components/JsonPreview';
 import CaptionPreview from '@/components/CaptionPreview';
+import FileProcessor from '@/class/FileProcessor';
 
 export default {
   components: {
@@ -41,7 +42,7 @@ export default {
   },
   data() {
     return {
-      enabled: false
+      enabled: FileProcessor.hasFiles
     };
   },
   methods: {
@@ -51,9 +52,15 @@ export default {
   },
   mounted() {
     EventBus.$on('file_selected', this.isEnabled);
+    EventBus.$on('caption_reset', () => this.enabled = false);
+
+    if (this.enabled) {
+      EventBus.$emit('caption_emit');
+    }
   },
   destroyed() {
     EventBus.$off('file_selected', this.isEnabled);
+    EventBus.$off('caption_reset', () => this.enabled = false);
   }
 };
 </script>
