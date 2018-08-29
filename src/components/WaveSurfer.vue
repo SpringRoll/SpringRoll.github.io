@@ -99,7 +99,8 @@ export default {
       if ($event.file instanceof File) {
         this.isPlaying = false;
         this.hasFile = true;
-        // this.currentTime = $event.time;
+
+        console.log($event.file);
         this.wave.loadBlob($event.file);
       }
     },
@@ -109,12 +110,12 @@ export default {
   },
   mounted() {
     this.initWave();
-    EventBus.$on('caption_changed', this.loadFile);
+    EventBus.$on('file_selected', this.loadFile);
     EventBus.$on('time_get', this.emitTime);
     EventBus.$on('caption_reset', this.empty);
   },
   destroyed() {
-    EventBus.$off('caption_changed', this.loadFile);
+    EventBus.$off('file_selected', this.loadFile);
     EventBus.$off('time_get', this.emitTime);
     EventBus.$off('caption_reset', this.empty);
     this.wave.destroy();

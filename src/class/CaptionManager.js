@@ -122,6 +122,7 @@ class CaptionManager {
   emit() {
     this.emitCurrent();
     this.emitData();
+    EventBus.$emit('file_selected', {file: this.file});
   }
 
   get lastIndex() {
