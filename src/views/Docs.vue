@@ -1,13 +1,6 @@
 <template>
-  <iframe class="iframe" :src="base + 'docs/index.html'"></iframe>
+  <iframe class="iframe" src="http://springroll.io/SpringRoll/"></iframe>
 </template>
-
-<script>
-import Iframe from '@/mixins/Iframe';
-export default {
-  mixins: [Iframe]
-};
-</script>
 
 <style lang="scss" scoped>
 .iframe {
